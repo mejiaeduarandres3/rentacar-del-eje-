@@ -302,6 +302,10 @@ img {
   z-index: 1;
 }
 
+.hero-banner-mobile {
+  display: none;
+}
+
 @keyframes sparkle {
   0% { opacity: 0.3; }
   100% { opacity: 1; }
@@ -1501,15 +1505,20 @@ img {
 
   .hero {
     min-height: auto;
-    aspect-ratio: auto;
-    background-position: center center;
-    background-size: cover;
+    background: none;
+    background-color: var(--bg-primary);
+  }
+
+  .hero::after,
+  .hero::before {
+    display: none;
   }
 
   .hero .container {
     position: relative;
-    padding: 100px 20px 40px;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
+    top: auto;
+    left: auto;
+    padding: 90px 20px 24px;
   }
 
   .hero-content {
@@ -1517,14 +1526,20 @@ img {
   }
 
   .hero-content h2 {
-    font-size: 1.6rem;
-    margin-bottom: 14px;
+    font-size: 1.5rem;
+    margin-bottom: 12px;
   }
 
   .hero-content p {
     font-size: 0.82rem;
     line-height: 1.6;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+  }
+
+  .hero-banner-mobile {
+    display: block;
+    width: 100%;
+    height: auto;
   }
 
   .vehicles-grid {
