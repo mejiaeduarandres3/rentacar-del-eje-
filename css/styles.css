@@ -1500,24 +1500,46 @@ img {
   }
 
   .hero {
-    min-height: 60vh;
+    min-height: auto;
+    aspect-ratio: auto;
+    background-position: center center;
+    background-size: cover;
   }
 
   .hero .container {
-    padding: 30px 24px;
+    position: relative;
+    padding: 100px 20px 40px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
+  }
+
+  .hero-content {
+    max-width: 100%;
   }
 
   .hero-content h2 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+    margin-bottom: 14px;
   }
 
   .hero-content p {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
   }
 
   .vehicles-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
+    gap: 12px;
+  }
+
+  .vehicles-section .container,
+  .videos-section .container {
+    padding: 0 12px;
+  }
+
+  .vehicle-card-buttons {
+    flex-direction: column;
+    gap: 6px;
   }
 
   .services-grid {
@@ -1570,7 +1592,16 @@ img {
 
 @media (max-width: 480px) {
   .hero-content h2 {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
+  }
+
+  .hero-content p {
+    font-size: 0.78rem;
+  }
+
+  .btn-reserve {
+    padding: 12px 28px;
+    font-size: 0.8rem;
   }
 
   .section-header h2 {
