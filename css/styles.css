@@ -1507,6 +1507,7 @@ img {
     min-height: auto;
     background: none;
     background-color: var(--bg-primary);
+    flex-direction: column;
   }
 
   .hero::after,
@@ -1514,11 +1515,18 @@ img {
     display: none;
   }
 
+  .hero-banner-mobile {
+    display: block;
+    width: 100%;
+    height: auto;
+    order: -1;
+  }
+
   .hero .container {
     position: relative;
     top: auto;
     left: auto;
-    padding: 90px 20px 24px;
+    padding: 24px 20px 30px;
   }
 
   .hero-content {
@@ -1534,12 +1542,6 @@ img {
     font-size: 0.82rem;
     line-height: 1.6;
     margin-bottom: 16px;
-  }
-
-  .hero-banner-mobile {
-    display: block;
-    width: 100%;
-    height: auto;
   }
 
   .vehicles-grid {
