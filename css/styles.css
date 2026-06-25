@@ -554,6 +554,104 @@ img {
   grid-template-columns: repeat(3, 1fr);
 }
 
+/* About / Nosotros Page */
+.about-hero {
+  padding: 140px 0 60px;
+  text-align: center;
+  background: var(--bg-secondary);
+}
+
+.about-hero h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+
+.about-subtitle {
+  font-size: 1.1rem;
+  color: var(--gray-300);
+  font-weight: 300;
+}
+
+.about-section {
+  padding: 60px 0;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.about-text h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  color: var(--gold);
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.about-text p {
+  color: var(--gray-200);
+  line-height: 1.8;
+  margin-bottom: 14px;
+  font-size: 0.95rem;
+}
+
+.about-values {
+  padding: 60px 0;
+  background: var(--bg-secondary);
+}
+
+.about-coverage {
+  padding: 60px 0;
+  text-align: center;
+}
+
+.about-coverage h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.8rem;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+
+.about-coverage > .container > p {
+  color: var(--gray-300);
+  margin-bottom: 30px;
+}
+
+.coverage-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.coverage-item {
+  background: var(--bg-tertiary);
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  color: var(--gray-200);
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid rgba(201, 168, 76, 0.1);
+}
+
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+  .coverage-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .about-hero h1 {
+    font-size: 2rem;
+  }
+}
+
 .btn-ver-todo {
   display: inline-flex;
   align-items: center;
