@@ -1,4 +1,4 @@
-export default async (request, context) => {
+export async function onRequest(context) {
   const response = await context.next();
 
   const contentType = response.headers.get("content-type") || "";
@@ -6,52 +6,48 @@ export default async (request, context) => {
     return response;
   }
 
-  const geo = context.geo;
-  const country = geo?.country?.name || geo?.country?.code || "Unknown";
-  const city = geo?.city || "Unknown";
+  const request = context.request;
+  const cf = request.cf || {};
+  const country = cf.country || "??";
+  const city = cf.city || "Unknown";
+  const region = cf.region || "";
   const url = new URL(request.url);
   const page = url.pathname || "/";
   const referrer = request.headers.get("referer") || "direct";
   const userAgent = request.headers.get("user-agent") || "";
   const now = new Date().toISOString();
 
-  const telegramToken = Deno.env.get("TELEGRAM_BOT_TOKEN");
-  const telegramChatId = Deno.env.get("TELEGRAM_CHAT_ID");
+  const telegramToken = context.env.TELEGRAM_BOT_TOKEN;
+  const telegramChatId = context.env.TELEGRAM_CHAT_ID;
 
   if (!telegramToken || !telegramChatId) {
     return response;
   }
 
+  const location = region ? `${city}, ${region}, ${country}` : `${city}, ${country}`;
+
   const message = [
-    `🌐 Nueva visita a rentacardeleje.com`,
-    `📅 ${now}`,
-    `📄 Página: ${page}`,
-    `🌍 ${city}, ${country}`,
-    `🔗 Referrer: ${referrer}`,
-    `📱 ${userAgent.substring(0, 100)}`
+    `\u{1F310} Nueva visita a rentacardeleje.com`,
+    `\u{1F4C5} ${now}`,
+    `\u{1F4C4} Página: ${page}`,
+    `\u{1F30D} ${location}`,
+    `\u{1F517} Referrer: ${referrer}`,
+    `\u{1F4F1} ${userAgent.substring(0, 100)}`
   ].join("\n");
 
   const telegramUrl = `https://api.telegram.org/bot${telegramToken}/sendMessage`;
 
-  try {
-    await fetch(telegramUrl, {
+  context.waitUntil(
+    fetch(telegramUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         chat_id: telegramChatId,
         text: message,
-        parse_mode: "HTML",
         disable_notification: true
       })
-    });
-  } catch (_e) {
-    // fire and forget
-  }
+    }).catch(() => {})
+  );
 
   return response;
-};
-
-export const config = {
-  path: "/*",
-  excludedPath: ["/img/*", "/css/*", "/js/*", "/videos/*", "/*.xml", "/*.txt", "/*.ico"]
-};
+}
