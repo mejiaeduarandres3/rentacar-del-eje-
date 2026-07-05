@@ -3,7 +3,7 @@
    Paleta extraída del logo: dorado, ámbar, negro
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0;700;0;800;0;900;1;700&display=swap');
+/* Fonts loaded via <link> in HTML for better performance */
 
 *,
 *::before,
@@ -274,7 +274,7 @@ img {
   display: flex;
   align-items: center;
   overflow: hidden;
-  background: url('../img/banner.png') center bottom / cover no-repeat;
+  background: url('../img/banner.jpg') center bottom / cover no-repeat;
 }
 
 .hero::after {
