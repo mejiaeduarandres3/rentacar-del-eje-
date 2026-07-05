@@ -1,6 +1,10 @@
 [build]
   publish = "."
 
+[[edge_functions]]
+  function = "track-visit"
+  path = "/*"
+
 [[headers]]
   for = "/*"
   [headers.values]
