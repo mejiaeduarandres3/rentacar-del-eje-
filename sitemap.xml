@@ -1,171 +1,256 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://rentacardeleje.com/</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://rentacardeleje.com/todos</loc>
-    <lastmod>2026-07-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://rentacardeleje.com/renta-carros-pereira</loc>
-    <lastmod>2026-07-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://rentacardeleje.com/renta-carros-armenia</loc>
-    <lastmod>2026-07-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://rentacardeleje.com/renta-carros-manizales</loc>
-    <lastmod>2026-07-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://rentacardeleje.com/fortuner-2023</loc>
-    <lastmod>2026-07-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rentacardeleje.com/hilux</loc>
-    <lastmod>2026-07-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rentacardeleje.com/mazda-cx30</loc>
-    <lastmod>2026-07-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rentacardeleje.com/kia-seltos</loc>
-    <lastmod>2026-07-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rentacardeleje.com/kia-picanto</loc>
-    <lastmod>2026-07-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rentacardeleje.com/salento-valle-de-cocora</loc>
-    <lastmod>2026-07-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rentacardeleje.com/nevado-del-ruiz-termales</loc>
-    <lastmod>2026-07-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rentacardeleje.com/ruta-eje-cafetero</loc>
-    <lastmod>2026-07-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://rentacardeleje.com/nosotros</loc>
-    <lastmod>2026-07-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/"/>
   </url>
   <url>
     <loc>https://rentacardeleje.com/en/</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/todos</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/todos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/fleet"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/todos"/>
   </url>
   <url>
     <loc>https://rentacardeleje.com/en/fleet</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/todos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/fleet"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/todos"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/renta-carros-pereira</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/renta-carros-pereira"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-pereira"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/renta-carros-pereira"/>
   </url>
   <url>
     <loc>https://rentacardeleje.com/en/car-rental-pereira</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/renta-carros-pereira"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-pereira"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/renta-carros-pereira"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/renta-carros-armenia</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/renta-carros-armenia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-armenia"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/renta-carros-armenia"/>
   </url>
   <url>
     <loc>https://rentacardeleje.com/en/car-rental-armenia</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/renta-carros-armenia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-armenia"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/renta-carros-armenia"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/renta-carros-manizales</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/renta-carros-manizales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-manizales"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/renta-carros-manizales"/>
   </url>
   <url>
     <loc>https://rentacardeleje.com/en/car-rental-manizales</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/renta-carros-manizales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-manizales"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/renta-carros-manizales"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/fortuner-2023</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/fortuner-2023"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/toyota-fortuner-2023"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/fortuner-2023"/>
   </url>
   <url>
     <loc>https://rentacardeleje.com/en/toyota-fortuner-2023</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/fortuner-2023"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/toyota-fortuner-2023"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/fortuner-2023"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/hilux</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/hilux"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/toyota-hilux"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/hilux"/>
   </url>
   <url>
     <loc>https://rentacardeleje.com/en/toyota-hilux</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/hilux"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/toyota-hilux"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/hilux"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/mazda-cx30</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/mazda-cx30"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/mazda-cx30"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/mazda-cx30"/>
   </url>
   <url>
     <loc>https://rentacardeleje.com/en/mazda-cx30</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/mazda-cx30"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/mazda-cx30"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/mazda-cx30"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/kia-seltos</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/kia-seltos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/kia-seltos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/kia-seltos"/>
   </url>
   <url>
     <loc>https://rentacardeleje.com/en/kia-seltos</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/kia-seltos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/kia-seltos"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/kia-seltos"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/kia-picanto</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/kia-picanto"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/kia-picanto"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/kia-picanto"/>
   </url>
   <url>
     <loc>https://rentacardeleje.com/en/kia-picanto</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/kia-picanto"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/kia-picanto"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/kia-picanto"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/salento-valle-de-cocora</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/salento-valle-de-cocora"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/salento-cocora-valley"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/salento-valle-de-cocora"/>
   </url>
   <url>
     <loc>https://rentacardeleje.com/en/salento-cocora-valley</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/salento-valle-de-cocora"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/salento-cocora-valley"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/salento-valle-de-cocora"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/nevado-del-ruiz-termales</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/nevado-del-ruiz-termales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/nevado-del-ruiz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/nevado-del-ruiz-termales"/>
   </url>
   <url>
     <loc>https://rentacardeleje.com/en/nevado-del-ruiz</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/nevado-del-ruiz-termales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/nevado-del-ruiz"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/nevado-del-ruiz-termales"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/ruta-eje-cafetero</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/ruta-eje-cafetero"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/coffee-region-road-trip"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/ruta-eje-cafetero"/>
   </url>
   <url>
     <loc>https://rentacardeleje.com/en/coffee-region-road-trip</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/ruta-eje-cafetero"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/coffee-region-road-trip"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/ruta-eje-cafetero"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/nosotros</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/nosotros"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/nosotros"/>
   </url>
   <url>
     <loc>https://rentacardeleje.com/en/about</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/nosotros"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/nosotros"/>
   </url>
 </urlset>
