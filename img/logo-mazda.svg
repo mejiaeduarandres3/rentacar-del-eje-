@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150">
+  <circle cx="75" cy="65" r="55" fill="none" stroke="#C9A84C" stroke-width="3"/>
+  <path d="M30 80 Q50 35 75 30 Q100 35 120 80" fill="none" stroke="#C9A84C" stroke-width="2.5"/>
+  <path d="M45 72 Q60 45 75 38 Q90 45 105 72" fill="none" stroke="#C9A84C" stroke-width="2"/>
+  <path d="M60 65 Q68 48 75 44 Q82 48 90 65" fill="none" stroke="#C9A84C" stroke-width="1.5"/>
+  <g fill="#C9A84C" font-family="Arial,sans-serif" font-size="14" font-weight="bold" letter-spacing="4" text-anchor="middle">
+    <text x="75" y="140">MAZDA</text>
+  </g>
+</svg>
