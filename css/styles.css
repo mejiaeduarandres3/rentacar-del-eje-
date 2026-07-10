@@ -2252,3 +2252,56 @@ button:focus-visible {
   background: var(--gold);
   color: var(--bg-primary);
 }
+
+/* ============================================
+   LANGUAGE SWITCHER
+   ============================================ */
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-right .lang-switch a {
+  width: auto;
+  height: auto;
+  border: none;
+  border-radius: 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--gray-300);
+}
+
+.nav-right .lang-switch a:hover {
+  color: var(--white);
+  border-color: transparent;
+}
+
+.nav-right .lang-switch a.lang-active {
+  color: var(--gold);
+}
+
+.lang-switch .lang-sep {
+  color: var(--gray-500);
+  font-size: 0.75rem;
+}
+
+.nav-left .lang-switch {
+  display: none;
+}
+
+.nav-left.active .lang-switch {
+  display: flex;
+  margin-top: 20px;
+}
+
+.nav-left .lang-switch a {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--gray-300);
+}
+
+.nav-left .lang-switch a.lang-active {
+  color: var(--gold);
+}

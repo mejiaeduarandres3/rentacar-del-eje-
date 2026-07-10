@@ -45,6 +45,22 @@ const PAGE_NAMES = {
   "/salento-valle-de-cocora": "Salento y Cocora",
   "/nevado-del-ruiz-termales": "Nevado y Termales",
   "/ruta-eje-cafetero": "Ruta Eje Cafetero",
+  "/en": "EN Home",
+  "/en/": "EN Home",
+  "/en/index.html": "EN Home",
+  "/en/fleet": "EN Fleet",
+  "/en/toyota-fortuner-2023": "EN Fortuner",
+  "/en/toyota-hilux": "EN Hilux",
+  "/en/mazda-cx30": "EN CX-30",
+  "/en/kia-seltos": "EN Seltos",
+  "/en/kia-picanto": "EN Picanto",
+  "/en/about": "EN About",
+  "/en/car-rental-pereira": "EN Pereira",
+  "/en/car-rental-armenia": "EN Armenia",
+  "/en/car-rental-manizales": "EN Manizales",
+  "/en/salento-cocora-valley": "EN Salento",
+  "/en/nevado-del-ruiz": "EN Nevado",
+  "/en/coffee-region-road-trip": "EN Road Trip",
 };
 
 export async function onRequest(context) {
