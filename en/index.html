@@ -35,9 +35,10 @@
   <meta name="twitter:title" content="Car Rental Eje Cafetero Colombia | Rent a Car Coffee Region">
   <meta name="twitter:description" content="Rent a car in Colombia's Coffee Region. Free airport delivery, international license OK, USD accepted.">
   <meta name="twitter:image" content="https://rentacardeleje.com/img/og-image.jpg">
+  <link rel="preload" as="image" href="../img/banner.jpg" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
   <link rel="stylesheet" href="../css/styles.css?v=17">
 </head>
 <body>
@@ -109,35 +110,7 @@
         <a href="https://wa.me/573147582415?text=Hi%2C%20I%27d%20like%20to%20book%20a%20car" class="btn-reserve" target="_blank" rel="noopener noreferrer">Book Now</a>
       </div>
     </div>
-    <img src="../img/banner.jpg" alt="Car rental fleet in Pereira, Armenia and Manizales — Renta Car del Eje" class="hero-banner-mobile" width="1395" height="620">
-  </section>
-
-  <!-- Trust Bar -->
-  <section style="background:var(--bg-secondary);padding:1.5rem 0;border-bottom:1px solid var(--gray-500);">
-    <div class="container">
-      <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:2rem 3rem;text-align:center;">
-        <div>
-          <span style="color:var(--gold);font-size:1.5rem;font-weight:800;">+7</span>
-          <span style="color:var(--gray-200);font-size:0.875rem;display:block;">Years of Experience</span>
-        </div>
-        <div>
-          <span style="color:var(--gold);font-size:1.5rem;font-weight:800;">7</span>
-          <span style="color:var(--gray-200);font-size:0.875rem;display:block;">Vehicles in Fleet</span>
-        </div>
-        <div>
-          <span style="color:var(--gold);font-size:1.5rem;font-weight:800;">3</span>
-          <span style="color:var(--gray-200);font-size:0.875rem;display:block;">Airports Served</span>
-        </div>
-        <div>
-          <span style="color:var(--gold);font-size:1.5rem;font-weight:800;">24/7</span>
-          <span style="color:var(--gray-200);font-size:0.875rem;display:block;">Always Available</span>
-        </div>
-        <div>
-          <span style="color:var(--gold);font-size:1.5rem;font-weight:800;">SOAT</span>
-          <span style="color:var(--gray-200);font-size:0.875rem;display:block;">+ Full Coverage</span>
-        </div>
-      </div>
-    </div>
+    <img src="../img/banner.jpg" alt="Car rental fleet in Pereira, Armenia and Manizales — Renta Car del Eje" class="hero-banner-mobile" width="1395" height="620" fetchpriority="high">
   </section>
 
   <!-- Featured Vehicles -->
@@ -233,21 +206,45 @@
     </div>
   </section>
 
+  <!-- Trust Bar -->
+  <section style="background:var(--bg-secondary);padding:1.5rem 0;border-bottom:1px solid var(--gray-500);">
+    <div class="container">
+      <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:2rem 3rem;text-align:center;">
+        <div>
+          <span style="color:var(--gold);font-size:1.5rem;font-weight:800;">+7</span>
+          <span style="color:var(--gray-200);font-size:0.875rem;display:block;">Years of Experience</span>
+        </div>
+        <div>
+          <span style="color:var(--gold);font-size:1.5rem;font-weight:800;">3</span>
+          <span style="color:var(--gray-200);font-size:0.875rem;display:block;">Airports Served</span>
+        </div>
+        <div>
+          <span style="color:var(--gold);font-size:1.5rem;font-weight:800;">24/7</span>
+          <span style="color:var(--gray-200);font-size:0.875rem;display:block;">Always Available</span>
+        </div>
+        <div>
+          <span style="color:var(--gold);font-size:1.5rem;font-weight:800;">SOAT</span>
+          <span style="color:var(--gray-200);font-size:0.875rem;display:block;">+ Full Coverage</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Brand Logos -->
   <section class="brands-section">
     <div class="brands-track">
-      <img src="../img/brand-toyota.png?v=11" alt="Toyota" class="brand-logo">
-      <img src="../img/brand-kia.png?v=8" alt="Kia" class="brand-logo">
-      <img src="../img/brand-mazda.png?v=8" alt="Mazda" class="brand-logo">
-      <img src="../img/brand-toyota.png?v=11" alt="Toyota" class="brand-logo">
-      <img src="../img/brand-kia.png?v=8" alt="Kia" class="brand-logo">
-      <img src="../img/brand-mazda.png?v=8" alt="Mazda" class="brand-logo">
-      <img src="../img/brand-toyota.png?v=11" alt="Toyota" class="brand-logo">
-      <img src="../img/brand-kia.png?v=8" alt="Kia" class="brand-logo">
-      <img src="../img/brand-mazda.png?v=8" alt="Mazda" class="brand-logo">
-      <img src="../img/brand-toyota.png?v=11" alt="Toyota" class="brand-logo">
-      <img src="../img/brand-kia.png?v=8" alt="Kia" class="brand-logo">
-      <img src="../img/brand-mazda.png?v=8" alt="Mazda" class="brand-logo">
+      <img src="../img/brand-toyota.png?v=11" alt="Toyota" class="brand-logo" loading="lazy">
+      <img src="../img/brand-kia.png?v=8" alt="Kia" class="brand-logo" loading="lazy">
+      <img src="../img/brand-mazda.png?v=8" alt="Mazda" class="brand-logo" loading="lazy">
+      <img src="../img/brand-toyota.png?v=11" alt="Toyota" class="brand-logo" loading="lazy">
+      <img src="../img/brand-kia.png?v=8" alt="Kia" class="brand-logo" loading="lazy">
+      <img src="../img/brand-mazda.png?v=8" alt="Mazda" class="brand-logo" loading="lazy">
+      <img src="../img/brand-toyota.png?v=11" alt="Toyota" class="brand-logo" loading="lazy">
+      <img src="../img/brand-kia.png?v=8" alt="Kia" class="brand-logo" loading="lazy">
+      <img src="../img/brand-mazda.png?v=8" alt="Mazda" class="brand-logo" loading="lazy">
+      <img src="../img/brand-toyota.png?v=11" alt="Toyota" class="brand-logo" loading="lazy">
+      <img src="../img/brand-kia.png?v=8" alt="Kia" class="brand-logo" loading="lazy">
+      <img src="../img/brand-mazda.png?v=8" alt="Mazda" class="brand-logo" loading="lazy">
     </div>
   </section>
 
