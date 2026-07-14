@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initGallery();
   initFAQ();
   initScrollAnimations();
+  initVideoLazyLoad();
 });
 
 function initMobileMenu() {
@@ -116,4 +117,39 @@ function initScrollAnimations() {
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+}
+
+function initVideoLazyLoad() {
+  const videos = document.querySelectorAll('video[data-src]');
+  if (!videos.length) return;
+
+  function startVideo(video) {
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('autoplay', '');
+    video.muted = true;
+    video.playsInline = true;
+    video.autoplay = true;
+    video.removeAttribute('preload');
+    video.src = video.dataset.src;
+
+    var tryPlay = function() { video.play().catch(function() {}); };
+    video.addEventListener('loadedmetadata', tryPlay);
+    video.addEventListener('loadeddata', tryPlay);
+    video.addEventListener('canplay', tryPlay);
+    video.load();
+    setTimeout(tryPlay, 500);
+    setTimeout(tryPlay, 1500);
+    setTimeout(tryPlay, 3000);
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+      startVideo(entry.target);
+    });
+  }, { threshold: 0.1 });
+
+  videos.forEach(function(video) { observer.observe(video); });
 }

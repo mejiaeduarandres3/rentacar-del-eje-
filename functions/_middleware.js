@@ -1,8 +1,14 @@
-const BOT_PATTERNS = /bot|crawl|spider|slurp|googlebot|bingbot|yandex|baiduspider|duckduckbot|facebookexternalhit|facebot|ia_archiver|semrushbot|ahrefsbot|mj12bot|dotbot|petalbot|bytespider|gptbot|claudebot|applebot|twitterbot|linkedinbot|whatsapp|telegrambot|discordbot|curl|wget|python|httpx|node-fetch|go-http|java\/|headlesschrome|phantomjs|lighthouse|pagespeed|gtmetrix|pingdom|uptimerobot|statuscake|netcraft|zgrab|masscan|censys|shodan/i;
+const BOT_PATTERNS = /bot|crawl|spider|slurp|googlebot|bingbot|yandex|baiduspider|duckduckbot|facebookexternalhit|facebot|ia_archiver|semrushbot|ahrefsbot|mj12bot|dotbot|petalbot|bytespider|gptbot|claudebot|applebot|twitterbot|linkedinbot|whatsapp|telegrambot|discordbot|curl|wget|python|httpx|node-fetch|go-http|java\/|headlesschrome|phantomjs|lighthouse|pagespeed|gtmetrix|pingdom|uptimerobot|statuscake|netcraft|zgrab|masscan|censys|shodan|scrapy|mechanize|libwww|lwp|httpclient|apache-http|okhttp|axios|postman|insomnia|nmap|nikto|sqlmap|dirbuster|gobuster|nuclei|wpscan|acunetix|nessus|qualys|zap|burp/i;
+
+const SUSPICIOUS_PATHS = /\.(json|env|xml|yml|yaml|ini|conf|cfg|bak|sql|log|git|svn|htaccess|htpasswd|DS_Store|php|asp|aspx|jsp|cgi)$|\/\.|wp-|wordpress|admin|login|phpmyadmin|xmlrpc|eval-stdin|vendor\/|node_modules|\.well-known\/|ckeditor|fckeditor|elfinder|config|backup|database|dump/i;
 
 function isBot(userAgent) {
   if (!userAgent || userAgent.length < 20) return true;
   return BOT_PATTERNS.test(userAgent);
+}
+
+function isSuspiciousPath(path) {
+  return SUSPICIOUS_PATHS.test(path);
 }
 
 function getDeviceType(ua) {
@@ -63,7 +69,30 @@ const PAGE_NAMES = {
   "/en/coffee-region-road-trip": "EN Road Trip",
 };
 
+const recentVisits = new Map();
+const DEDUP_WINDOW_MS = 10000;
+
+function isDuplicate(key) {
+  const now = Date.now();
+  const last = recentVisits.get(key);
+  if (last && now - last < DEDUP_WINDOW_MS) return true;
+  recentVisits.set(key, now);
+  if (recentVisits.size > 500) {
+    const cutoff = now - DEDUP_WINDOW_MS;
+    for (const [k, v] of recentVisits) {
+      if (v < cutoff) recentVisits.delete(k);
+    }
+  }
+  return false;
+}
+
 export async function onRequest(context) {
+  const url = new URL(context.request.url);
+  if (url.hostname === "www.rentacardeleje.com") {
+    url.hostname = "rentacardeleje.com";
+    return Response.redirect(url.toString(), 301);
+  }
+
   const response = await context.next();
 
   const contentType = response.headers.get("content-type") || "";
@@ -78,15 +107,30 @@ export async function onRequest(context) {
     return response;
   }
 
+  const url = new URL(request.url);
+  const path = url.pathname.replace(/\.html$/, "") || "/";
+
+  if (isSuspiciousPath(url.pathname)) {
+    return response;
+  }
+
+  const pageName = PAGE_NAMES[path];
+  if (!pageName) {
+    return response;
+  }
+
   const cf = request.cf || {};
   const country = cf.country || "??";
   const city = cf.city || "Unknown";
   const region = cf.region || "";
-  const url = new URL(request.url);
-  const path = url.pathname.replace(/\.html$/, "") || "/";
+  const ip = request.headers.get("cf-connecting-ip") || "unknown";
   const referrer = request.headers.get("referer") || "direct";
 
-  const pageName = PAGE_NAMES[path] || path;
+  const dedupKey = `${ip}:${path}`;
+  if (isDuplicate(dedupKey)) {
+    return response;
+  }
+
   const location = region ? `${city}, ${region}` : city;
   const device = getDeviceType(userAgent);
   const source = getSource(referrer);
@@ -108,6 +152,9 @@ export async function onRequest(context) {
                  country === "GB" ? "\u{1F1EC}\u{1F1E7}" :
                  country === "DE" ? "\u{1F1E9}\u{1F1EA}" :
                  country === "FR" ? "\u{1F1EB}\u{1F1F7}" :
+                 country === "NL" ? "\u{1F1F3}\u{1F1F1}" :
+                 country === "IT" ? "\u{1F1EE}\u{1F1F9}" :
+                 country === "AU" ? "\u{1F1E6}\u{1F1FA}" :
                  country === "PA" ? "\u{1F1F5}\u{1F1E6}" :
                  country === "IN" ? "\u{1F1EE}\u{1F1F3}" :
                  "\u{1F30D}";
