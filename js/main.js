@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initFAQ();
   initScrollAnimations();
   initVideoLazyLoad();
+  initConversionTracking();
+  initUTMPreservation();
 });
 
 function initMobileMenu() {
@@ -152,4 +154,72 @@ function initVideoLazyLoad() {
   }, { threshold: 0.1 });
 
   videos.forEach(function(video) { observer.observe(video); });
+}
+
+function initConversionTracking() {
+  var ADS_WHATSAPP = 'AW-18209447648/0pzsCJqOt9EcEOC9-OpD';
+  var ADS_CALL = 'AW-18209447648/Gti6CJ2Ot9EcEOC9-OpD';
+
+  document.addEventListener('click', function(e) {
+    var link = e.target.closest('a[href]');
+    if (!link) return;
+    var href = link.getAttribute('href') || '';
+
+    if (href.indexOf('wa.me/') !== -1 || href.indexOf('whatsapp') !== -1) {
+      var page = location.pathname.split('/').pop() || 'index';
+      if (typeof gtag === 'function') {
+        gtag('event', 'whatsapp_click', {
+          event_category: 'lead',
+          event_label: page,
+          transport_type: 'beacon'
+        });
+        gtag('event', 'conversion', {
+          send_to: ADS_WHATSAPP,
+          event_callback: function() {}
+        });
+      }
+    }
+
+    if (href.indexOf('tel:') === 0) {
+      var page = location.pathname.split('/').pop() || 'index';
+      if (typeof gtag === 'function') {
+        gtag('event', 'call_click', {
+          event_category: 'lead',
+          event_label: page,
+          transport_type: 'beacon'
+        });
+        gtag('event', 'conversion', {
+          send_to: ADS_CALL,
+          event_callback: function() {}
+        });
+      }
+    }
+  });
+}
+
+function initUTMPreservation() {
+  var params = new URLSearchParams(location.search);
+  var utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid'];
+  var utmParams = new URLSearchParams();
+  utmKeys.forEach(function(key) {
+    if (params.has(key)) utmParams.set(key, params.get(key));
+  });
+  if (!utmParams.toString()) return;
+
+  document.querySelectorAll('a[href]').forEach(function(link) {
+    var href = link.getAttribute('href');
+    if (!href) return;
+    if (href.indexOf('tel:') === 0 || href.indexOf('mailto:') === 0) return;
+    if (href.indexOf('http') === 0 && href.indexOf(location.hostname) === -1) return;
+
+    try {
+      var url = new URL(href, location.origin);
+      utmKeys.forEach(function(key) {
+        if (utmParams.has(key) && !url.searchParams.has(key)) {
+          url.searchParams.set(key, utmParams.get(key));
+        }
+      });
+      link.setAttribute('href', url.pathname + url.search + url.hash);
+    } catch(e) {}
+  });
 }

@@ -236,6 +236,24 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/ruta-eje-cafetero"/>
   </url>
   <url>
+    <loc>https://rentacardeleje.com/filandia-guia-turistica</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/filandia-guia-turistica"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/filandia-guide"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/filandia-guia-turistica"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/filandia-guide</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/filandia-guia-turistica"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/filandia-guide"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/filandia-guia-turistica"/>
+  </url>
+  <url>
     <loc>https://rentacardeleje.com/nosotros</loc>
     <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
@@ -252,5 +270,293 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/nosotros"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/about"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/nosotros"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/chevrolet-tracker</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/chevrolet-tracker"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/chevrolet-tracker"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/chevrolet-tracker"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/chevrolet-tracker</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/chevrolet-tracker"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/chevrolet-tracker"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/chevrolet-tracker"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/alquiler-carros-salento</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-salento"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-salento"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-salento"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/car-rental-salento</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-salento"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-salento"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-salento"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/alquiler-carros-filandia</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-filandia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-filandia"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-filandia"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/car-rental-filandia</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-filandia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-filandia"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-filandia"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/alquiler-carros-santa-rosa-de-cabal</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-santa-rosa-de-cabal"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-santa-rosa-de-cabal"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-santa-rosa-de-cabal"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/car-rental-santa-rosa-de-cabal</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-santa-rosa-de-cabal"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-santa-rosa-de-cabal"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-santa-rosa-de-cabal"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/alquiler-carros-dosquebradas</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-dosquebradas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-dosquebradas"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-dosquebradas"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/car-rental-dosquebradas</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-dosquebradas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-dosquebradas"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-dosquebradas"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/alquiler-carros-circasia</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-circasia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-circasia"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-circasia"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/car-rental-circasia</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-circasia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-circasia"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-circasia"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/alquiler-carros-montenegro</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-montenegro"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-montenegro"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-montenegro"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/car-rental-montenegro</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-montenegro"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-montenegro"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-montenegro"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/alquiler-carros-quimbaya</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-quimbaya"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-quimbaya"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-quimbaya"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/car-rental-quimbaya</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-quimbaya"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-quimbaya"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-quimbaya"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/alquiler-carros-calarca</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-calarca"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-calarca"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-calarca"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/car-rental-calarca</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-calarca"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-calarca"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-calarca"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/alquiler-carros-la-tebaida</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-la-tebaida"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-la-tebaida"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-la-tebaida"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/car-rental-la-tebaida</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-la-tebaida"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-la-tebaida"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-la-tebaida"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/alquiler-carros-chinchina</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-chinchina"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-chinchina"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-chinchina"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/car-rental-chinchina</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-chinchina"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-chinchina"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-chinchina"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/alquiler-carros-villamaria</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-villamaria"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-villamaria"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-villamaria"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/car-rental-villamaria</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-villamaria"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-villamaria"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-villamaria"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/alquiler-carros-palestina</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-palestina"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-palestina"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-palestina"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/car-rental-palestina</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-palestina"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-palestina"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-palestina"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/alquiler-carros-aeropuerto-matecana</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-aeropuerto-matecana"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-matecana-airport"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-aeropuerto-matecana"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/car-rental-matecana-airport</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-aeropuerto-matecana"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-matecana-airport"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-aeropuerto-matecana"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/alquiler-carros-aeropuerto-el-eden</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-aeropuerto-el-eden"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-el-eden-airport"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-aeropuerto-el-eden"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/car-rental-el-eden-airport</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-aeropuerto-el-eden"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-el-eden-airport"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-aeropuerto-el-eden"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/alquiler-carros-aeropuerto-la-nubia</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-aeropuerto-la-nubia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-la-nubia-airport"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-aeropuerto-la-nubia"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/car-rental-la-nubia-airport</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/alquiler-carros-aeropuerto-la-nubia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-la-nubia-airport"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-aeropuerto-la-nubia"/>
   </url>
 </urlset>

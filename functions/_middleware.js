@@ -67,6 +67,38 @@ const PAGE_NAMES = {
   "/en/salento-cocora-valley": "EN Salento",
   "/en/nevado-del-ruiz": "EN Nevado",
   "/en/coffee-region-road-trip": "EN Road Trip",
+  "/chevrolet-tracker": "Chevrolet Tracker",
+  "/alquiler-carros-salento": "Salento",
+  "/alquiler-carros-filandia": "Filandia",
+  "/alquiler-carros-santa-rosa-de-cabal": "Santa Rosa",
+  "/alquiler-carros-dosquebradas": "Dosquebradas",
+  "/alquiler-carros-circasia": "Circasia",
+  "/alquiler-carros-montenegro": "Montenegro",
+  "/alquiler-carros-quimbaya": "Quimbaya",
+  "/alquiler-carros-calarca": "Calarcá",
+  "/alquiler-carros-la-tebaida": "La Tebaida",
+  "/alquiler-carros-chinchina": "Chinchiná",
+  "/alquiler-carros-villamaria": "Villamaría",
+  "/alquiler-carros-palestina": "Palestina",
+  "/alquiler-carros-aeropuerto-matecana": "Aeropuerto Matecaña",
+  "/alquiler-carros-aeropuerto-el-eden": "Aeropuerto El Edén",
+  "/alquiler-carros-aeropuerto-la-nubia": "Aeropuerto La Nubia",
+  "/en/chevrolet-tracker": "EN Tracker",
+  "/en/car-rental-salento": "EN Salento",
+  "/en/car-rental-filandia": "EN Filandia",
+  "/en/car-rental-santa-rosa-de-cabal": "EN Santa Rosa",
+  "/en/car-rental-dosquebradas": "EN Dosquebradas",
+  "/en/car-rental-circasia": "EN Circasia",
+  "/en/car-rental-montenegro": "EN Montenegro",
+  "/en/car-rental-quimbaya": "EN Quimbaya",
+  "/en/car-rental-calarca": "EN Calarcá",
+  "/en/car-rental-la-tebaida": "EN La Tebaida",
+  "/en/car-rental-chinchina": "EN Chinchiná",
+  "/en/car-rental-villamaria": "EN Villamaría",
+  "/en/car-rental-palestina": "EN Palestina",
+  "/en/car-rental-matecana-airport": "EN Aeropuerto Matecaña",
+  "/en/car-rental-el-eden-airport": "EN Aeropuerto El Edén",
+  "/en/car-rental-la-nubia-airport": "EN Aeropuerto La Nubia",
 };
 
 const recentVisits = new Map();
@@ -107,10 +139,10 @@ export async function onRequest(context) {
     return response;
   }
 
-  const url = new URL(request.url);
-  const path = url.pathname.replace(/\.html$/, "") || "/";
+  const pageUrl = new URL(request.url);
+  const path = pageUrl.pathname.replace(/\.html$/, "") || "/";
 
-  if (isSuspiciousPath(url.pathname)) {
+  if (isSuspiciousPath(pageUrl.pathname)) {
     return response;
   }
 
