@@ -18,6 +18,7 @@
       <a href="/admin/itinerario.html">Itinerario</a>
       <a href="/admin/reservas.html">Reservas</a>
       <a href="/admin/vehiculos.html">Vehiculos</a>
+      <a href="/admin/gastos.html">Gastos</a>
       <a href="/admin/ganancias.html">Ganancias</a>
     </nav>
     <button class="btn-logout" onclick="logout()">Salir</button>
@@ -405,6 +406,7 @@
           <td style="font-weight:700">$ ${fmtMoney(r.valor_total)}</td>
           <td><span class="badge ${badgeMap[r.estado] || 'badge-gray'}">${r.estado}</span></td>
           <td>
+            <button class="btn btn-sm" style="background:var(--oro);color:var(--azul);font-weight:700" onclick="descargarReserva(${r.id})">Descargar</button>
             ${r.estado === 'activa' ? `
               <button class="btn btn-sm btn-primary" onclick="changeEstado(${r.id},'completada')">Completar</button>
               <button class="btn btn-sm btn-danger" onclick="changeEstado(${r.id},'cancelada')">Cancelar</button>` : ''}
@@ -423,6 +425,111 @@
       if (error) { toast(error.message, 'error'); return; }
       toast(`Reserva ${estado}`);
       loadReservas();
+    }
+
+    function descargarReserva(id) {
+      const r = reservas.find(x => x.id === id);
+      if (!r) return;
+      const vMap = {};
+      vehiculos.forEach(v => vMap[v.id] = v);
+      const v = vMap[r.vehiculo_id] || {};
+      const w = window.open('', '_blank');
+      w.document.write(`<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
+<title>Reserva ${r.numero_reserva}</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;color:#1a1a2e;padding:30px;max-width:800px;margin:0 auto;font-size:13px}
+.header{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #0f1035;padding-bottom:16px;margin-bottom:20px}
+.brand{font-size:22px;font-weight:900;color:#0f1035;letter-spacing:2px}
+.brand span{display:block;font-size:11px;font-weight:400;color:#666;letter-spacing:1px}
+.reserva-num{background:#0f1035;color:#d4af37;padding:8px 16px;border-radius:8px;font-weight:800;font-size:15px;letter-spacing:1px}
+.section{margin-bottom:16px}
+.section-title{font-size:10px;font-weight:800;color:#0f1035;letter-spacing:2px;text-transform:uppercase;border-bottom:2px solid #d4af37;padding-bottom:4px;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px}
+.grid.full{grid-template-columns:1fr}
+.field{display:flex;gap:6px;padding:3px 0}
+.field .label{font-weight:700;color:#555;min-width:120px;font-size:11px}
+.field .value{font-weight:600;color:#1a1a2e}
+.total-box{background:#0f1035;color:#d4af37;padding:14px 20px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;margin:16px 0}
+.total-box .tl{font-weight:800;font-size:14px;letter-spacing:1px;color:white}
+.total-box .tv{font-weight:900;font-size:22px}
+.footer{margin-top:30px;border-top:1px solid #ddd;padding-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:40px;font-size:11px}
+.sig-line{border-top:1px solid #333;margin-top:50px;padding-top:6px;text-align:center;font-weight:600}
+.info-bar{background:#f5f5f5;padding:8px 12px;border-radius:6px;font-size:10px;color:#666;text-align:center;margin-top:20px}
+@media print{body{padding:20px}button{display:none!important}}
+</style></head><body>
+<div class="header">
+  <div><div class="brand">RENTACAR DEL EJE<span>NIT: 1004775525-1 — Eje Cafetero, Colombia</span></div></div>
+  <div class="reserva-num">${r.numero_reserva}</div>
+</div>
+<div class="section">
+  <div class="section-title">Datos del Cliente</div>
+  <div class="grid">
+    <div class="field"><span class="label">Nombre:</span><span class="value">${r.nombre_cliente}</span></div>
+    <div class="field"><span class="label">${r.tipo_documento || 'Documento'}:</span><span class="value">${r.numero_documento || '—'}</span></div>
+    <div class="field"><span class="label">Residencia:</span><span class="value">${r.residencia || '—'}</span></div>
+    <div class="field"><span class="label">Telefono:</span><span class="value">${r.telefono_cliente || '—'}</span></div>
+    <div class="field"><span class="label">Email:</span><span class="value">${r.email_cliente || '—'}</span></div>
+    <div class="field"><span class="label">Licencia N°:</span><span class="value">${r.licencia_numero || '—'}</span></div>
+  </div>
+</div>
+<div class="section">
+  <div class="section-title">Vehiculo</div>
+  <div class="grid">
+    <div class="field"><span class="label">Placa:</span><span class="value" style="font-size:15px;letter-spacing:2px">${v.placa || '—'}</span></div>
+    <div class="field"><span class="label">Descripcion:</span><span class="value">${v.descripcion || '—'}</span></div>
+    <div class="field"><span class="label">Color:</span><span class="value">${v.color || '—'}</span></div>
+    <div class="field"><span class="label">Categoria:</span><span class="value">${v.categoria || '—'}</span></div>
+  </div>
+</div>
+<div class="section">
+  <div class="section-title">Detalles de la Reserva</div>
+  <div class="grid">
+    <div class="field"><span class="label">Fecha Recepcion:</span><span class="value">${fmtDate(r.fecha_inicio)} ${r.hora_inicio || ''}</span></div>
+    <div class="field"><span class="label">Fecha Devolucion:</span><span class="value">${fmtDate(r.fecha_fin)} ${r.hora_fin || ''}</span></div>
+    <div class="field"><span class="label">Lugar Recepcion:</span><span class="value">${r.lugar_inicio || '—'}</span></div>
+    <div class="field"><span class="label">Lugar Devolucion:</span><span class="value">${r.lugar_fin || '—'}</span></div>
+    <div class="field"><span class="label">Dias:</span><span class="value" style="font-size:15px;font-weight:800">${r.dias || '—'}</span></div>
+    <div class="field"><span class="label">Km Inicial:</span><span class="value">${r.km_inicial || '—'}</span></div>
+    <div class="field"><span class="label">Combustible:</span><span class="value">${r.nivel_combustible || '—'}</span></div>
+  </div>
+</div>
+<div class="section">
+  <div class="section-title">Resumen Financiero</div>
+  <div class="grid">
+    <div class="field"><span class="label">Tarifa Diaria:</span><span class="value">$ ${fmtMoney(r.tarifa_dia)}</span></div>
+    <div class="field"><span class="label">Subtotal (${r.dias} dias):</span><span class="value">$ ${fmtMoney((r.dias || 0) * (Number(r.tarifa_dia) || 0))}</span></div>
+    <div class="field"><span class="label">Deducible:</span><span class="value">$ ${fmtMoney(r.deducible || 0)}</span></div>
+    <div class="field"><span class="label">Servicios Adic.:</span><span class="value">$ ${fmtMoney(r.servicios_adicionales || 0)}${r.desc_adicionales ? ' (' + r.desc_adicionales + ')' : ''}</span></div>
+  </div>
+  <div class="total-box">
+    <span class="tl">TOTAL A PAGAR</span>
+    <span class="tv">$ ${fmtMoney(r.valor_total)}</span>
+  </div>
+  <div class="grid">
+    <div class="field"><span class="label">Metodo de Pago:</span><span class="value">${r.metodo_pago || '—'}</span></div>
+    <div class="field"><span class="label">Estado del Pago:</span><span class="value">${r.estado_pago || '—'}</span></div>
+  </div>
+</div>
+${r.observaciones ? `<div class="section"><div class="section-title">Observaciones</div><p style="padding:6px 0">${r.observaciones}</p></div>` : ''}
+<div class="footer">
+  <div>
+    <div class="sig-line">Firma del Cliente</div>
+    <p style="text-align:center;margin-top:4px;color:#666">${r.nombre_cliente}</p>
+  </div>
+  <div>
+    <div class="sig-line">Representante</div>
+    <p style="text-align:center;margin-top:4px;color:#666">${r.representante || 'Rentacar del Eje'}${r.cargo_representante ? ' — ' + r.cargo_representante : ''}</p>
+  </div>
+</div>
+<div class="info-bar">
+  Rentacar del Eje — Eje Cafetero, Colombia — Tel: +57 321 897 2741 — rentacardeleje.com
+</div>
+<div style="text-align:center;margin-top:16px">
+  <button onclick="window.print()" style="background:#0f1035;color:#d4af37;border:none;padding:10px 30px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit">Imprimir / Guardar PDF</button>
+</div>
+</body></html>`);
+      w.document.close();
     }
 
     init();

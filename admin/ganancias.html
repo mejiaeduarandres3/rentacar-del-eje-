@@ -18,6 +18,7 @@
       <a href="/admin/itinerario.html">Itinerario</a>
       <a href="/admin/reservas.html">Reservas</a>
       <a href="/admin/vehiculos.html">Vehiculos</a>
+      <a href="/admin/gastos.html">Gastos</a>
       <a href="/admin/ganancias.html">Ganancias</a>
     </nav>
     <button class="btn-logout" onclick="logout()">Salir</button>
@@ -27,24 +28,24 @@
     <div class="stats-row">
       <div class="stat-card">
         <div class="stat-label">Total Ingresos</div>
-        <div class="stat-value" id="statTotal" style="color:var(--verde)">—</div>
+        <div class="stat-value" id="statIngresos" style="color:var(--verde)">—</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Total Reservas</div>
+        <div class="stat-label">Total Gastos</div>
+        <div class="stat-value" id="statGastos" style="color:var(--rojo)">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Ganancia Neta</div>
+        <div class="stat-value" id="statGanancia" style="color:var(--azul)">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Reservas</div>
         <div class="stat-value" id="statReservas">—</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Vehiculos Activos</div>
-        <div class="stat-value" id="statVehiculos">—</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Promedio por Reserva</div>
-        <div class="stat-value" id="statPromedio">—</div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-header">Ganancias por Vehiculo</div>
+      <div class="card-header">Rentabilidad por Vehiculo</div>
       <div class="card-body">
         <div class="filters">
           <div class="field">
@@ -52,7 +53,7 @@
             <select id="filtroPeriodo" onchange="onPeriodoChange()">
               <option value="mes">Mes Actual</option>
               <option value="mes-pasado">Mes Pasado</option>
-              <option value="anio">Año Actual</option>
+              <option value="anio">Ano Actual</option>
               <option value="todo">Todo el Historial</option>
               <option value="custom">Personalizado</option>
             </select>
@@ -69,8 +70,16 @@
         </div>
         <div class="table-wrap">
           <table class="data-table">
-            <thead><tr><th>Placa</th><th>Descripcion</th><th>Propietario</th><th>Precio/Dia</th><th>Reservas</th><th>Ingresos</th></tr></thead>
-            <tbody id="tbodyGanancias"><tr><td colspan="6" class="loading">Cargando...</td></tr></tbody>
+            <thead><tr>
+              <th>Placa</th>
+              <th>Descripcion</th>
+              <th>Propietario</th>
+              <th>Reservas</th>
+              <th style="color:var(--verde)">Ingresos</th>
+              <th style="color:var(--rojo)">Gastos</th>
+              <th style="color:var(--azul)">Ganancia</th>
+            </tr></thead>
+            <tbody id="tbodyGanancias"><tr><td colspan="7" class="loading">Cargando...</td></tr></tbody>
             <tfoot id="tfootGanancias"></tfoot>
           </table>
         </div>
@@ -103,58 +112,81 @@
       try {
         const range = getDateRange(document.getElementById('filtroPeriodo').value);
 
-        const [vRes, rRes] = await Promise.all([
+        const queries = [
           sb.from('vehiculos').select('*').eq('activo', true).order('descripcion'),
           (() => {
             let q = sb.from('reservas').select('*').in('estado', ['activa', 'completada']);
             if (range.desde) q = q.gte('fecha_inicio', range.desde);
             if (range.hasta) q = q.lte('fecha_inicio', range.hasta);
             return q;
+          })(),
+          (() => {
+            let q = sb.from('gastos').select('*');
+            if (range.desde) q = q.gte('fecha', range.desde);
+            if (range.hasta) q = q.lte('fecha', range.hasta);
+            return q;
           })()
-        ]);
+        ];
+
+        const [vRes, rRes, gRes] = await Promise.all(queries);
 
         const vehiculos = vRes.data || [];
         const reservas = rRes.data || [];
+        const gastosData = gRes.data || [];
 
-        // Agrupar por vehiculo
         const stats = vehiculos.map(v => {
           const vReservas = reservas.filter(r => r.vehiculo_id === v.id);
+          const vGastos = gastosData.filter(g => g.vehiculo_id === v.id);
+          const ingresos = vReservas.reduce((sum, r) => sum + (Number(r.valor_total) || 0), 0);
+          const gastos = vGastos.reduce((sum, g) => sum + (Number(g.monto) || 0), 0);
           return {
             ...v,
             total_reservas: vReservas.length,
-            total_ingresos: vReservas.reduce((sum, r) => sum + (Number(r.valor_total) || 0), 0)
+            total_ingresos: ingresos,
+            total_gastos: gastos,
+            ganancia: ingresos - gastos
           };
-        }).sort((a, b) => b.total_ingresos - a.total_ingresos);
+        }).sort((a, b) => b.ganancia - a.ganancia);
 
-        const totalGeneral = stats.reduce((s, v) => s + v.total_ingresos, 0);
+        const totalIngresos = stats.reduce((s, v) => s + v.total_ingresos, 0);
+        const totalGastos = stats.reduce((s, v) => s + v.total_gastos, 0);
+        const totalGanancia = totalIngresos - totalGastos;
         const totalReservas = stats.reduce((s, v) => s + v.total_reservas, 0);
 
-        document.getElementById('statTotal').textContent = '$ ' + fmtMoney(totalGeneral);
+        document.getElementById('statIngresos').textContent = '$ ' + fmtMoney(totalIngresos);
+        document.getElementById('statGastos').textContent = '$ ' + fmtMoney(totalGastos);
+        document.getElementById('statGanancia').textContent = '$ ' + fmtMoney(totalGanancia);
+        document.getElementById('statGanancia').style.color = totalGanancia >= 0 ? 'var(--verde)' : 'var(--rojo)';
         document.getElementById('statReservas').textContent = totalReservas;
-        document.getElementById('statVehiculos').textContent = vehiculos.length;
-        document.getElementById('statPromedio').textContent = totalReservas > 0 ? '$ ' + fmtMoney(Math.round(totalGeneral / totalReservas)) : '$ 0';
 
         const tbody = document.getElementById('tbodyGanancias');
         if (!stats.length) {
-          tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No hay datos</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No hay datos</td></tr>';
           document.getElementById('tfootGanancias').innerHTML = '';
           return;
         }
 
-        tbody.innerHTML = stats.map(v => `<tr>
+        tbody.innerHTML = stats.map(v => {
+          const ganColor = v.ganancia >= 0 ? 'var(--verde)' : 'var(--rojo)';
+          return `<tr>
           <td><strong style="letter-spacing:1px">${v.placa}</strong></td>
           <td>${v.descripcion}</td>
           <td>${v.propietario || '—'}</td>
-          <td>$ ${fmtMoney(v.precio_dia)}</td>
           <td style="text-align:center">${v.total_reservas}</td>
-          <td style="font-weight:800;color:var(--verde)">$ ${fmtMoney(v.total_ingresos)}</td>
-        </tr>`).join('');
+          <td style="font-weight:700;color:var(--verde)">$ ${fmtMoney(v.total_ingresos)}</td>
+          <td style="font-weight:700;color:var(--rojo)">$ ${fmtMoney(v.total_gastos)}</td>
+          <td style="font-weight:900;color:${ganColor}">$ ${fmtMoney(v.ganancia)}</td>
+        </tr>`;
+        }).join('');
 
+        const footGanColor = totalGanancia >= 0 ? 'var(--verde)' : 'var(--rojo)';
         document.getElementById('tfootGanancias').innerHTML = `
           <tr style="background:var(--azul)">
-            <td colspan="4" style="color:white;font-weight:800;font-size:14px;letter-spacing:1px;padding:14px 12px">TOTAL GENERAL</td>
+            <td colspan="3" style="color:white;font-weight:800;font-size:14px;letter-spacing:1px;padding:14px 12px">TOTAL GENERAL</td>
             <td style="color:white;font-weight:800;text-align:center;padding:14px 12px">${totalReservas}</td>
-            <td style="color:var(--oro-claro);font-weight:900;font-size:16px;padding:14px 12px">$ ${fmtMoney(totalGeneral)}</td>
+            <td style="color:#8dffb0;font-weight:800;padding:14px 12px">$ ${fmtMoney(totalIngresos)}</td>
+            <td style="color:#ff8d8d;font-weight:800;padding:14px 12px">$ ${fmtMoney(totalGastos)}</td>
+            <td style="color:var(--oro-claro);font-weight:900;font-size:16px;padding:14px 12px">$ ${fmtMoney(totalGanancia)}</td>
           </tr>`;
       } catch (e) {
         toast('Error: ' + e.message, 'error');

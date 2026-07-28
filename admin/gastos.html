@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Gastos — Panel Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <div class="brand">RENTACAR DEL EJE<span>Panel Administrativo</span></div>
+    <nav class="admin-nav">
+      <a href="/admin/">Inicio</a>
+      <a href="/admin/itinerario.html">Itinerario</a>
+      <a href="/admin/reservas.html">Reservas</a>
+      <a href="/admin/vehiculos.html">Vehiculos</a>
+      <a href="/admin/gastos.html">Gastos</a>
+      <a href="/admin/ganancias.html">Ganancias</a>
+    </nav>
+    <button class="btn-logout" onclick="logout()">Salir</button>
+  </header>
+
+  <main class="admin-main">
+    <div class="card" id="formCard">
+      <div class="card-header" id="formTitle">Registrar Nuevo Gasto</div>
+      <div class="card-body">
+        <form id="gastoForm" onsubmit="saveGasto(event)">
+          <input type="hidden" id="g_id">
+          <div class="form-grid">
+            <div class="field">
+              <label>Vehiculo *</label>
+              <select id="g_vehiculo" required>
+                <option value="">Seleccionar vehiculo...</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Categoria *</label>
+              <select id="g_categoria" required>
+                <option>Mantenimiento</option>
+                <option>Seguro</option>
+                <option>Combustible</option>
+                <option>Lavado</option>
+                <option>Peajes</option>
+                <option>Impuestos</option>
+                <option>Reparacion</option>
+                <option>Repuestos</option>
+                <option>Otros</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label>Descripcion *</label>
+              <input type="text" id="g_desc" required placeholder="Ej: Cambio de aceite y filtros">
+            </div>
+            <div class="field">
+              <label>Monto ($) *</label>
+              <input type="number" id="g_monto" min="0" step="100" required placeholder="0">
+            </div>
+            <div class="field">
+              <label>Fecha *</label>
+              <input type="date" id="g_fecha" required>
+            </div>
+            <div class="field full">
+              <label>Comprobante (foto o PDF)</label>
+              <input type="file" id="g_comprobante" accept="image/*,.pdf" style="padding:8px">
+            </div>
+          </div>
+          <div class="btn-group">
+            <button type="submit" class="btn btn-gold" id="btnSave">Guardar Gasto</button>
+            <button type="button" class="btn btn-danger" onclick="cancelEdit()" id="btnCancel" style="display:none">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Historial de Gastos</div>
+      <div class="card-body">
+        <div class="filters" style="flex-wrap:wrap">
+          <div class="field">
+            <label>Vehiculo</label>
+            <select id="filtroVehiculo" onchange="loadGastos()">
+              <option value="">Todos</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Categoria</label>
+            <select id="filtroCategoria" onchange="loadGastos()">
+              <option value="">Todas</option>
+              <option>Mantenimiento</option>
+              <option>Seguro</option>
+              <option>Combustible</option>
+              <option>Lavado</option>
+              <option>Peajes</option>
+              <option>Impuestos</option>
+              <option>Reparacion</option>
+              <option>Repuestos</option>
+              <option>Otros</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Desde</label>
+            <input type="date" id="filtroDesde" onchange="loadGastos()">
+          </div>
+          <div class="field">
+            <label>Hasta</label>
+            <input type="date" id="filtroHasta" onchange="loadGastos()">
+          </div>
+        </div>
+        <div style="margin-bottom:12px">
+          <strong style="font-size:14px;color:var(--azul)">Total Gastos: </strong>
+          <strong style="font-size:16px;color:var(--rojo)" id="totalGastos">$ 0</strong>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Vehiculo</th>
+                <th>Categoria</th>
+                <th>Descripcion</th>
+                <th>Monto</th>
+                <th>Comprobante</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyGastos">
+              <tr><td colspan="7" class="loading">Cargando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/admin/js/admin.js?v=3"></script>
+  <script>
+    let vehiculos = [];
+    let gastos = [];
+
+    async function init() {
+      const { data } = await sb.from('vehiculos').select('*').eq('activo', true).order('descripcion');
+      vehiculos = data || [];
+      const selects = [document.getElementById('g_vehiculo'), document.getElementById('filtroVehiculo')];
+      vehiculos.forEach(v => {
+        selects.forEach(sel => {
+          const opt = document.createElement('option');
+          opt.value = v.id;
+          opt.textContent = v.placa + ' — ' + v.descripcion;
+          sel.appendChild(opt);
+        });
+      });
+      document.getElementById('g_fecha').value = new Date().toISOString().slice(0, 10);
+      loadGastos();
+    }
+
+    async function loadGastos() {
+      let query = sb.from('gastos').select('*').order('fecha', { ascending: false });
+      const vid = document.getElementById('filtroVehiculo').value;
+      const cat = document.getElementById('filtroCategoria').value;
+      const desde = document.getElementById('filtroDesde').value;
+      const hasta = document.getElementById('filtroHasta').value;
+      if (vid) query = query.eq('vehiculo_id', parseInt(vid));
+      if (cat) query = query.eq('categoria', cat);
+      if (desde) query = query.gte('fecha', desde);
+      if (hasta) query = query.lte('fecha', hasta);
+      const { data, error } = await query;
+      if (error) { toast('Error: ' + error.message, 'error'); return; }
+      gastos = data || [];
+      renderGastos();
+    }
+
+    function renderGastos() {
+      const tbody = document.getElementById('tbodyGastos');
+      const total = gastos.reduce((s, g) => s + (Number(g.monto) || 0), 0);
+      document.getElementById('totalGastos').textContent = '$ ' + fmtMoney(total);
+      if (!gastos.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="empty-state">No hay gastos registrados</td></tr>';
+        return;
+      }
+      const vMap = {};
+      vehiculos.forEach(v => vMap[v.id] = v);
+      tbody.innerHTML = gastos.map(g => {
+        const v = vMap[g.vehiculo_id];
+        const compLink = g.comprobante_url
+          ? `<a href="${g.comprobante_url}" target="_blank" style="color:var(--azul);font-weight:600;font-size:11px">Ver</a>`
+          : '<span style="color:#aaa;font-size:11px">—</span>';
+        return `<tr>
+          <td>${fmtDate(g.fecha)}</td>
+          <td>${v ? v.placa : 'N/A'}</td>
+          <td><span class="badge badge-gray">${g.categoria}</span></td>
+          <td>${g.descripcion}</td>
+          <td style="font-weight:700;color:var(--rojo)">$ ${fmtMoney(g.monto)}</td>
+          <td style="text-align:center">${compLink}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" onclick="editGasto(${g.id})">Editar</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteGasto(${g.id})">Eliminar</button>
+          </td>
+        </tr>`;
+      }).join('');
+    }
+
+    async function saveGasto(e) {
+      e.preventDefault();
+      const id = document.getElementById('g_id').value;
+      const fileInput = document.getElementById('g_comprobante');
+      let comprobante_url = null;
+
+      if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const ext = file.name.split('.').pop();
+        const fileName = `${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+        const { data: upData, error: upErr } = await sb.storage.from('comprobantes').upload(fileName, file);
+        if (upErr) { toast('Error subiendo comprobante: ' + upErr.message, 'error'); return; }
+        const { data: urlData } = sb.storage.from('comprobantes').getPublicUrl(fileName);
+        comprobante_url = urlData.publicUrl;
+      }
+
+      const data = {
+        vehiculo_id: parseInt(document.getElementById('g_vehiculo').value),
+        categoria: document.getElementById('g_categoria').value,
+        descripcion: document.getElementById('g_desc').value,
+        monto: parseFloat(document.getElementById('g_monto').value) || 0,
+        fecha: document.getElementById('g_fecha').value
+      };
+      if (comprobante_url) data.comprobante_url = comprobante_url;
+
+      try {
+        if (id) {
+          const { error } = await sb.from('gastos').update(data).eq('id', parseInt(id));
+          if (error) throw error;
+          toast('Gasto actualizado');
+        } else {
+          const { error } = await sb.from('gastos').insert(data);
+          if (error) throw error;
+          toast('Gasto registrado');
+        }
+        cancelEdit();
+        loadGastos();
+      } catch (err) {
+        toast(err.message || 'Error al guardar', 'error');
+      }
+    }
+
+    function editGasto(id) {
+      const g = gastos.find(x => x.id === id);
+      if (!g) return;
+      document.getElementById('g_id').value = g.id;
+      document.getElementById('g_vehiculo').value = g.vehiculo_id;
+      document.getElementById('g_categoria').value = g.categoria;
+      document.getElementById('g_desc').value = g.descripcion;
+      document.getElementById('g_monto').value = g.monto;
+      document.getElementById('g_fecha').value = g.fecha;
+      document.getElementById('formTitle').textContent = 'Editar Gasto';
+      document.getElementById('btnSave').textContent = 'Actualizar Gasto';
+      document.getElementById('btnCancel').style.display = '';
+      document.getElementById('formCard').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function cancelEdit() {
+      document.getElementById('gastoForm').reset();
+      document.getElementById('g_id').value = '';
+      document.getElementById('g_fecha').value = new Date().toISOString().slice(0, 10);
+      document.getElementById('formTitle').textContent = 'Registrar Nuevo Gasto';
+      document.getElementById('btnSave').textContent = 'Guardar Gasto';
+      document.getElementById('btnCancel').style.display = 'none';
+    }
+
+    async function deleteGasto(id) {
+      const g = gastos.find(x => x.id === id);
+      if (!confirm('¿Seguro que desea eliminar este gasto?')) return;
+      const { error } = await sb.from('gastos').delete().eq('id', id);
+      if (error) { toast(error.message, 'error'); return; }
+      toast('Gasto eliminado');
+      loadGastos();
+    }
+
+    init();
+  </script>
+</body>
+</html>
