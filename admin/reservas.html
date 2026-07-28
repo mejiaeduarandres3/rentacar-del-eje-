@@ -586,13 +586,13 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;color:#1a1a2e;max-wi
 /* Observations */
 .obs-box{background:#fffef5;border:1px solid #f0e9c8;border-radius:8px;padding:10px 14px;font-size:11px;color:#555;line-height:1.6;margin-top:4px}
 
-/* Signatures */
-.sig-section{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:28px;padding-top:10px}
-.sig-block{text-align:center}
-.sig-area{height:70px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:0}
-.sig-img{height:60px;width:auto;opacity:0.9}
+/* Signature */
+.sig-section{margin-top:28px;padding-top:10px;display:flex;justify-content:center}
+.sig-block{text-align:center;min-width:320px}
+.sig-area{height:80px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:0}
+.sig-img{height:70px;width:auto}
 .sig-line{border-top:2px solid #1a1a2e;padding-top:8px}
-.sig-name{font-size:12px;font-weight:700;color:#1a1a2e;margin-top:2px}
+.sig-name{font-size:13px;font-weight:700;color:#1a1a2e;margin-top:2px}
 .sig-role{font-size:9px;color:#888;font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-top:1px}
 
 /* Footer */
@@ -692,15 +692,9 @@ ${r.observaciones ? `<div class="section"><div class="section-head">Observacione
 
 <div class="sig-section">
   <div class="sig-block">
-    <div class="sig-area"></div>
-    <div class="sig-line"></div>
-    <div class="sig-name">${r.nombre_cliente}</div>
-    <div class="sig-role">Arrendatario</div>
-  </div>
-  <div class="sig-block">
     <div class="sig-area"><img src="${DOC_FIRMA}" class="sig-img" alt="Firma"></div>
     <div class="sig-line"></div>
-    <div class="sig-name">Eduardo Andres Mejia</div>
+    <div class="sig-name">Eduar Andres Mejia Ospina</div>
     <div class="sig-role">Representante Legal — Rentacar del Eje</div>
   </div>
 </div>
