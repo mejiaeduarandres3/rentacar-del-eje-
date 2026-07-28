@@ -25,10 +25,11 @@
   </header>
 
   <main class="admin-main">
-    <div class="card">
-      <div class="card-header">Realizar Nueva Reserva</div>
+    <div class="card" id="formCard">
+      <div class="card-header" id="formTitle">Realizar Nueva Reserva</div>
       <div class="card-body">
         <form id="reservaForm" onsubmit="saveReserva(event)">
+          <input type="hidden" id="r_edit_id">
           <div style="margin-bottom:20px">
             <h4 style="font-size:11px;font-weight:800;color:var(--azul);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--oro)">Datos del Documento</h4>
             <div class="form-grid">
@@ -205,8 +206,9 @@
           </div>
 
           <div class="btn-group">
-            <button type="submit" class="btn btn-gold">Guardar Reserva</button>
+            <button type="submit" class="btn btn-gold" id="btnSave">Guardar Reserva</button>
             <button type="button" class="btn btn-primary" onclick="limpiarForm()">Limpiar</button>
+            <button type="button" class="btn btn-danger" onclick="cancelarEdicion()" id="btnCancelEdit" style="display:none">Cancelar Edicion</button>
           </div>
         </form>
       </div>
@@ -302,6 +304,7 @@
 
     async function saveReserva(e) {
       e.preventDefault();
+      const editId = document.getElementById('r_edit_id').value;
       const vehiculo_id = parseInt(document.getElementById('r_vehiculo').value);
       const fecha_inicio = document.getElementById('r_f_inicio').value;
       const fecha_fin = document.getElementById('r_f_fin').value;
@@ -311,11 +314,11 @@
         return;
       }
 
-      // Validar cruce de fechas
       const { data: conflicts } = await sb.rpc('check_reserva_overlap', {
         p_vehiculo_id: vehiculo_id,
         p_fecha_inicio: fecha_inicio,
-        p_fecha_fin: fecha_fin
+        p_fecha_fin: fecha_fin,
+        p_exclude_id: editId ? parseInt(editId) : null
       });
       if (conflicts && conflicts.length > 0) {
         toast(`Cruce de fechas con reserva ${conflicts[0].numero_reserva} (${conflicts[0].fecha_inicio} a ${conflicts[0].fecha_fin})`, 'error');
@@ -356,24 +359,81 @@
         nivel_combustible: document.getElementById('r_combustible').value,
         observaciones: document.getElementById('r_obs').value || null,
         representante: document.getElementById('r_rep').value || null,
-        cargo_representante: document.getElementById('r_cargo').value || null,
-        estado: 'activa'
+        cargo_representante: document.getElementById('r_cargo').value || null
       };
 
-      const { error } = await sb.from('reservas').insert(data);
-      if (error) { toast('Error: ' + error.message, 'error'); return; }
-      toast('Reserva creada exitosamente');
+      try {
+        if (editId) {
+          const { error } = await sb.from('reservas').update(data).eq('id', parseInt(editId));
+          if (error) throw error;
+          toast('Reserva actualizada exitosamente');
+        } else {
+          data.estado = 'activa';
+          const { error } = await sb.from('reservas').insert(data);
+          if (error) throw error;
+          toast('Reserva creada exitosamente');
+        }
+        limpiarForm();
+        loadReservas();
+      } catch (err) {
+        toast('Error: ' + err.message, 'error');
+      }
+    }
+
+    function editReserva(id) {
+      const r = reservas.find(x => x.id === id);
+      if (!r) return;
+      document.getElementById('r_edit_id').value = r.id;
+      document.getElementById('r_num').value = r.numero_reserva;
+      document.getElementById('r_vehiculo').value = r.vehiculo_id;
+      document.getElementById('r_nombre').value = r.nombre_cliente || '';
+      document.getElementById('r_tipo_doc').value = r.tipo_documento || 'Cedula de Ciudadania';
+      document.getElementById('r_doc').value = r.numero_documento || '';
+      document.getElementById('r_residencia').value = r.residencia || '';
+      document.getElementById('r_tel').value = r.telefono_cliente || '';
+      document.getElementById('r_email').value = r.email_cliente || '';
+      document.getElementById('r_lic').value = r.licencia_numero || '';
+      document.getElementById('r_lic_vence').value = r.licencia_vencimiento || '';
+      document.getElementById('r_f_inicio').value = r.fecha_inicio || '';
+      document.getElementById('r_h_inicio').value = r.hora_inicio || '';
+      document.getElementById('r_l_inicio').value = r.lugar_inicio || '';
+      document.getElementById('r_f_fin').value = r.fecha_fin || '';
+      document.getElementById('r_h_fin').value = r.hora_fin || '';
+      document.getElementById('r_l_fin').value = r.lugar_fin || '';
+      document.getElementById('r_dias').value = r.dias || 1;
+      document.getElementById('r_km').value = r.km_inicial || '';
+      document.getElementById('r_combustible').value = r.nivel_combustible || 'Lleno (Full)';
+      document.getElementById('r_tarifa').value = r.tarifa_dia || 0;
+      document.getElementById('r_deducible').value = r.deducible || 0;
+      document.getElementById('r_adicional').value = r.servicios_adicionales || 0;
+      document.getElementById('r_desc_ad').value = r.desc_adicionales || '';
+      document.getElementById('r_pago').value = r.metodo_pago || 'Efectivo';
+      document.getElementById('r_estado_pago').value = r.estado_pago || 'Pendiente';
+      document.getElementById('r_rep').value = r.representante || '';
+      document.getElementById('r_cargo').value = r.cargo_representante || '';
+      document.getElementById('r_obs').value = r.observaciones || '';
+      calcTotal();
+      document.getElementById('formTitle').textContent = 'Editar Reserva — ' + r.numero_reserva;
+      document.getElementById('btnSave').textContent = 'Actualizar Reserva';
+      document.getElementById('btnCancelEdit').style.display = '';
+      document.getElementById('formCard').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function cancelarEdicion() {
       limpiarForm();
-      loadReservas();
     }
 
     function limpiarForm() {
       document.getElementById('reservaForm').reset();
+      document.getElementById('r_edit_id').value = '';
       document.getElementById('r_num').value = genReservaNum();
       document.getElementById('r_subtotal').value = '';
       document.getElementById('r_total').value = '';
       document.getElementById('r_deducible').value = '0';
       document.getElementById('r_adicional').value = '0';
+      document.getElementById('formTitle').textContent = 'Realizar Nueva Reserva';
+      document.getElementById('btnSave').textContent = 'Guardar Reserva';
+      document.getElementById('btnCancelEdit').style.display = 'none';
     }
 
     async function loadReservas() {
@@ -407,6 +467,7 @@
           <td><span class="badge ${badgeMap[r.estado] || 'badge-gray'}">${r.estado}</span></td>
           <td>
             <button class="btn btn-sm" style="background:var(--oro);color:var(--azul);font-weight:700" onclick="descargarReserva(${r.id})">Descargar</button>
+            ${r.estado !== 'cancelada' ? `<button class="btn btn-sm" style="background:var(--azul-mid);color:white" onclick="editReserva(${r.id})">Editar</button>` : ''}
             ${r.estado === 'activa' ? `
               <button class="btn btn-sm btn-primary" onclick="changeEstado(${r.id},'completada')">Completar</button>
               <button class="btn btn-sm btn-danger" onclick="changeEstado(${r.id},'cancelada')">Cancelar</button>` : ''}
