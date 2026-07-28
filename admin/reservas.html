@@ -321,7 +321,11 @@
         return;
       }
 
-      const totalStr = (document.getElementById('r_total').value || '0').replace(/[^0-9.-]/g, '');
+      const dias = parseInt(document.getElementById('r_dias').value) || 1;
+      const tarifa_dia = parseFloat(document.getElementById('r_tarifa').value) || 0;
+      const deducible = parseFloat(document.getElementById('r_deducible').value) || 0;
+      const servicios_adicionales = parseFloat(document.getElementById('r_adicional').value) || 0;
+      const valor_total = (dias * tarifa_dia) + deducible + servicios_adicionales;
       const data = {
         numero_reserva: document.getElementById('r_num').value,
         vehiculo_id,
@@ -339,12 +343,12 @@
         fecha_fin,
         hora_fin: document.getElementById('r_h_fin').value || null,
         lugar_fin: document.getElementById('r_l_fin').value || null,
-        dias: parseInt(document.getElementById('r_dias').value) || 1,
-        tarifa_dia: parseFloat(document.getElementById('r_tarifa').value) || 0,
-        deducible: parseFloat(document.getElementById('r_deducible').value) || 0,
-        servicios_adicionales: parseFloat(document.getElementById('r_adicional').value) || 0,
+        dias,
+        tarifa_dia,
+        deducible,
+        servicios_adicionales,
         desc_adicionales: document.getElementById('r_desc_ad').value || null,
-        valor_total: parseFloat(totalStr) || 0,
+        valor_total,
         metodo_pago: document.getElementById('r_pago').value,
         estado_pago: document.getElementById('r_estado_pago').value,
         km_inicial: document.getElementById('r_km').value || null,
