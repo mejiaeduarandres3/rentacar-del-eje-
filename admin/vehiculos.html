@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Vehiculos — Panel Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <div class="brand">RENTACAR DEL EJE<span>Panel Administrativo</span></div>
+    <nav class="admin-nav">
+      <a href="/admin/">Inicio</a>
+      <a href="/admin/itinerario.html">Itinerario</a>
+      <a href="/admin/reservas.html">Reservas</a>
+      <a href="/admin/vehiculos.html">Vehiculos</a>
+      <a href="/admin/ganancias.html">Ganancias</a>
+    </nav>
+    <button class="btn-logout" onclick="logout()">Salir</button>
+  </header>
+
+  <main class="admin-main">
+    <div class="card" id="formCard">
+      <div class="card-header" id="formTitle">Registrar Nuevo Vehiculo</div>
+      <div class="card-body">
+        <form id="vehiculoForm" onsubmit="saveVehiculo(event)">
+          <input type="hidden" id="v_id">
+          <div class="form-grid">
+            <div class="field full">
+              <label>Descripcion (marca, modelo, año) *</label>
+              <input type="text" id="v_descripcion" required placeholder="Ej: Toyota Fortuner 2023">
+            </div>
+            <div class="field">
+              <label>Placa *</label>
+              <input type="text" id="v_placa" required placeholder="Ej: ABC 123" style="text-transform:uppercase;font-weight:700">
+            </div>
+            <div class="field">
+              <label>Color</label>
+              <input type="text" id="v_color" placeholder="Ej: Blanco">
+            </div>
+            <div class="field">
+              <label>Categoria</label>
+              <select id="v_categoria">
+                <option value="">Seleccionar</option>
+                <option>Economico</option>
+                <option>Compacto</option>
+                <option>Sedan</option>
+                <option>SUV</option>
+                <option>Camioneta 4x4</option>
+                <option>Van / Minivan</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Propietario</label>
+              <input type="text" id="v_propietario" placeholder="Nombre del propietario">
+            </div>
+            <div class="field">
+              <label>N° Poliza</label>
+              <input type="text" id="v_poliza" placeholder="Numero de poliza">
+            </div>
+            <div class="field">
+              <label>Vencimiento Poliza</label>
+              <input type="date" id="v_venc_poliza">
+            </div>
+            <div class="field">
+              <label>N° SOAT</label>
+              <input type="text" id="v_soat" placeholder="Numero de SOAT">
+            </div>
+            <div class="field">
+              <label>Vencimiento SOAT</label>
+              <input type="date" id="v_venc_soat">
+            </div>
+            <div class="field">
+              <label>Precio por dia ($)</label>
+              <input type="number" id="v_precio" min="0" step="1000" placeholder="0">
+            </div>
+          </div>
+          <div class="btn-group">
+            <button type="submit" class="btn btn-gold" id="btnSave">Guardar Vehiculo</button>
+            <button type="button" class="btn btn-danger" onclick="cancelEdit()" id="btnCancel" style="display:none">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Vehiculos Registrados</div>
+      <div class="card-body">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Placa</th>
+                <th>Descripcion</th>
+                <th>Categoria</th>
+                <th>Propietario</th>
+                <th>Precio/Dia</th>
+                <th>Poliza</th>
+                <th>SOAT</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyVehiculos">
+              <tr><td colspan="9" class="loading">Cargando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/admin/js/admin.js"></script>
+  <script>
+    let vehiculos = [];
+
+    async function loadVehiculos() {
+      const { data, error } = await supabase.from('vehiculos').select('*').order('activo', { ascending: false }).order('descripcion');
+      if (error) { toast('Error: ' + error.message, 'error'); return; }
+      vehiculos = data;
+      renderTable();
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('tbodyVehiculos');
+      if (vehiculos.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No hay vehiculos registrados</td></tr>';
+        return;
+      }
+      const badgeClass = { red: 'badge-red', yellow: 'badge-yellow', green: 'badge-green', gray: 'badge-gray' };
+      const badgeText = { red: 'Vencido', yellow: 'Por vencer', green: 'Vigente', gray: 'Sin dato' };
+      tbody.innerHTML = vehiculos.map(v => {
+        const poliza = expiryStatus(v.vencimiento_poliza);
+        const soat = expiryStatus(v.vencimiento_soat);
+        return `<tr style="${v.activo ? '' : 'opacity:.5'}">
+          <td><strong style="letter-spacing:1px">${v.placa}</strong></td>
+          <td>${v.descripcion}</td>
+          <td>${v.categoria || '—'}</td>
+          <td>${v.propietario || '—'}</td>
+          <td>$ ${fmtMoney(v.precio_dia)}</td>
+          <td><span class="badge ${badgeClass[poliza]}">${badgeText[poliza]}</span></td>
+          <td><span class="badge ${badgeClass[soat]}">${badgeText[soat]}</span></td>
+          <td><span class="badge ${v.activo ? 'badge-green' : 'badge-red'}">${v.activo ? 'Activo' : 'Inactivo'}</span></td>
+          <td>
+            <button class="btn btn-primary btn-sm" onclick="editVehiculo(${v.id})">Editar</button>
+            ${v.activo
+              ? `<button class="btn btn-danger btn-sm" onclick="toggleVehiculo(${v.id}, false)">Desactivar</button>`
+              : `<button class="btn btn-sm" style="background:var(--verde);color:white" onclick="toggleVehiculo(${v.id}, true)">Activar</button>`}
+          </td>
+        </tr>`;
+      }).join('');
+    }
+
+    async function saveVehiculo(e) {
+      e.preventDefault();
+      const id = document.getElementById('v_id').value;
+      const data = {
+        descripcion: document.getElementById('v_descripcion').value,
+        placa: document.getElementById('v_placa').value.toUpperCase(),
+        color: document.getElementById('v_color').value || null,
+        categoria: document.getElementById('v_categoria').value || null,
+        propietario: document.getElementById('v_propietario').value || null,
+        numero_poliza: document.getElementById('v_poliza').value || null,
+        vencimiento_poliza: document.getElementById('v_venc_poliza').value || null,
+        numero_soat: document.getElementById('v_soat').value || null,
+        vencimiento_soat: document.getElementById('v_venc_soat').value || null,
+        precio_dia: parseFloat(document.getElementById('v_precio').value) || 0
+      };
+      try {
+        if (id) {
+          const { error } = await supabase.from('vehiculos').update(data).eq('id', parseInt(id));
+          if (error) throw error;
+          toast('Vehiculo actualizado');
+        } else {
+          const { error } = await supabase.from('vehiculos').insert(data);
+          if (error) throw error;
+          toast('Vehiculo registrado');
+        }
+        cancelEdit();
+        loadVehiculos();
+      } catch (e) {
+        toast(e.message || 'Error al guardar', 'error');
+      }
+    }
+
+    function editVehiculo(id) {
+      const v = vehiculos.find(x => x.id === id);
+      if (!v) return;
+      document.getElementById('v_id').value = v.id;
+      document.getElementById('v_descripcion').value = v.descripcion;
+      document.getElementById('v_placa').value = v.placa;
+      document.getElementById('v_color').value = v.color || '';
+      document.getElementById('v_categoria').value = v.categoria || '';
+      document.getElementById('v_propietario').value = v.propietario || '';
+      document.getElementById('v_poliza').value = v.numero_poliza || '';
+      document.getElementById('v_venc_poliza').value = v.vencimiento_poliza || '';
+      document.getElementById('v_soat').value = v.numero_soat || '';
+      document.getElementById('v_venc_soat').value = v.vencimiento_soat || '';
+      document.getElementById('v_precio').value = v.precio_dia || '';
+      document.getElementById('formTitle').textContent = 'Editar Vehiculo — ' + v.placa;
+      document.getElementById('btnSave').textContent = 'Actualizar Vehiculo';
+      document.getElementById('btnCancel').style.display = '';
+      document.getElementById('formCard').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function cancelEdit() {
+      document.getElementById('vehiculoForm').reset();
+      document.getElementById('v_id').value = '';
+      document.getElementById('formTitle').textContent = 'Registrar Nuevo Vehiculo';
+      document.getElementById('btnSave').textContent = 'Guardar Vehiculo';
+      document.getElementById('btnCancel').style.display = 'none';
+    }
+
+    async function toggleVehiculo(id, activo) {
+      const v = vehiculos.find(x => x.id === id);
+      if (!v) return;
+      if (!confirm(`¿Seguro que desea ${activo ? 'activar' : 'desactivar'} el vehiculo ${v.placa}?`)) return;
+      const { error } = await supabase.from('vehiculos').update({ activo }).eq('id', id);
+      if (error) { toast(error.message, 'error'); return; }
+      toast(`Vehiculo ${activo ? 'activado' : 'desactivado'}`);
+      loadVehiculos();
+    }
+
+    loadVehiculos();
+  </script>
+</body>
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Reservas — Panel Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <div class="brand">RENTACAR DEL EJE<span>Panel Administrativo</span></div>
+    <nav class="admin-nav">
+      <a href="/admin/">Inicio</a>
+      <a href="/admin/itinerario.html">Itinerario</a>
+      <a href="/admin/reservas.html">Reservas</a>
+      <a href="/admin/vehiculos.html">Vehiculos</a>
+      <a href="/admin/ganancias.html">Ganancias</a>
+    </nav>
+    <button class="btn-logout" onclick="logout()">Salir</button>
+  </header>
+
+  <main class="admin-main">
+    <div class="card">
+      <div class="card-header">Realizar Nueva Reserva</div>
+      <div class="card-body">
+        <form id="reservaForm" onsubmit="saveReserva(event)">
+          <div style="margin-bottom:20px">
+            <h4 style="font-size:11px;font-weight:800;color:var(--azul);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--oro)">Datos del Documento</h4>
+            <div class="form-grid">
+              <div class="field">
+                <label>N° de Reserva</label>
+                <input type="text" id="r_num" readonly style="font-weight:800;color:var(--azul)">
+              </div>
+              <div class="field">
+                <label>Vehiculo *</label>
+                <select id="r_vehiculo" required onchange="onVehiculoChange()">
+                  <option value="">Seleccionar vehiculo...</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:20px">
+            <h4 style="font-size:11px;font-weight:800;color:var(--azul);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--oro)">Datos del Cliente</h4>
+            <div class="form-grid">
+              <div class="field full">
+                <label>Nombre Completo *</label>
+                <input type="text" id="r_nombre" required placeholder="Nombre y apellidos completos">
+              </div>
+              <div class="field">
+                <label>Tipo de Documento</label>
+                <select id="r_tipo_doc">
+                  <option>Cedula de Ciudadania</option>
+                  <option>Cedula de Extranjeria</option>
+                  <option>Pasaporte</option>
+                  <option>NIT</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>N° Documento</label>
+                <input type="text" id="r_doc" placeholder="Numero de documento">
+              </div>
+              <div class="field full">
+                <label>Lugar de Residencia</label>
+                <input type="text" id="r_residencia" placeholder="Ciudad, Departamento o Pais">
+              </div>
+              <div class="field">
+                <label>Telefono / Celular</label>
+                <input type="tel" id="r_tel" placeholder="+57 300 000 0000">
+              </div>
+              <div class="field">
+                <label>Correo Electronico</label>
+                <input type="email" id="r_email" placeholder="correo@email.com">
+              </div>
+              <div class="field">
+                <label>N° Licencia de Conduccion</label>
+                <input type="text" id="r_lic" placeholder="N° de licencia">
+              </div>
+              <div class="field">
+                <label>Licencia Vence</label>
+                <input type="date" id="r_lic_vence">
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:20px">
+            <h4 style="font-size:11px;font-weight:800;color:var(--azul);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--oro)">Detalles de la Reserva</h4>
+            <div class="form-grid">
+              <div class="field">
+                <label>Fecha de Recepcion *</label>
+                <input type="date" id="r_f_inicio" required onchange="calcDias()">
+              </div>
+              <div class="field">
+                <label>Hora de Recepcion</label>
+                <input type="time" id="r_h_inicio">
+              </div>
+              <div class="field full">
+                <label>Lugar de Recepcion (entrega al cliente) *</label>
+                <input type="text" id="r_l_inicio" placeholder="Direccion / Aeropuerto / Ciudad">
+              </div>
+              <div class="field">
+                <label>Fecha de Devolucion *</label>
+                <input type="date" id="r_f_fin" required onchange="calcDias()">
+              </div>
+              <div class="field">
+                <label>Hora de Devolucion</label>
+                <input type="time" id="r_h_fin">
+              </div>
+              <div class="field full">
+                <label>Lugar de Devolucion *</label>
+                <input type="text" id="r_l_fin" placeholder="Direccion / Aeropuerto / Ciudad">
+              </div>
+              <div class="field">
+                <label>Numero de Dias</label>
+                <input type="number" id="r_dias" min="1" value="1" style="font-weight:800;font-size:16px;color:var(--azul)" oninput="calcTotal()">
+              </div>
+              <div class="field">
+                <label>Km Inicial</label>
+                <input type="text" id="r_km" placeholder="ej. 28,500 km">
+              </div>
+              <div class="field">
+                <label>Nivel de Combustible</label>
+                <select id="r_combustible">
+                  <option>Lleno (Full)</option>
+                  <option>3/4</option>
+                  <option>1/2</option>
+                  <option>1/4</option>
+                  <option>Vacio</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:20px">
+            <h4 style="font-size:11px;font-weight:800;color:var(--azul);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--oro)">Resumen Financiero</h4>
+            <div class="form-grid">
+              <div class="field">
+                <label>Tarifa Diaria ($)</label>
+                <input type="number" id="r_tarifa" min="0" step="1000" placeholder="0" oninput="calcTotal()">
+              </div>
+              <div class="field">
+                <label>Subtotal Alquiler ($)</label>
+                <input type="text" id="r_subtotal" readonly style="font-weight:700;color:var(--azul-mid)">
+              </div>
+              <div class="field">
+                <label>Deducible ($)</label>
+                <input type="number" id="r_deducible" min="0" step="1000" value="0" oninput="calcTotal()">
+              </div>
+              <div class="field">
+                <label>Servicios Adicionales ($)</label>
+                <input type="number" id="r_adicional" min="0" step="1000" value="0" oninput="calcTotal()">
+              </div>
+              <div class="field full">
+                <label>Descripcion Servicios Adicionales</label>
+                <input type="text" id="r_desc_ad" placeholder="GPS, silla infantil, conductor adicional...">
+              </div>
+              <div class="field full">
+                <label>TOTAL A PAGAR ($)</label>
+                <input type="text" id="r_total" readonly
+                  style="background:var(--azul);color:var(--oro-claro);font-weight:900;font-size:20px;text-align:right;border-color:var(--azul);border-radius:9px;padding:12px 14px">
+              </div>
+              <div class="field">
+                <label>Metodo de Pago</label>
+                <select id="r_pago">
+                  <option>Efectivo</option>
+                  <option>Tarjeta de Credito</option>
+                  <option>Tarjeta de Debito</option>
+                  <option>Transferencia Bancaria</option>
+                  <option>Nequi / Daviplata</option>
+                  <option>PSE</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Estado del Pago</label>
+                <select id="r_estado_pago">
+                  <option>Pendiente</option>
+                  <option>Anticipo Pagado</option>
+                  <option>Pagado en su Totalidad</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom:20px">
+            <h4 style="font-size:11px;font-weight:800;color:var(--azul);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--oro)">Representante y Observaciones</h4>
+            <div class="form-grid">
+              <div class="field">
+                <label>Nombre del Representante</label>
+                <input type="text" id="r_rep" placeholder="Nombre del agente">
+              </div>
+              <div class="field">
+                <label>Cargo</label>
+                <input type="text" id="r_cargo" placeholder="Ej: Asesor Comercial">
+              </div>
+              <div class="field full">
+                <label>Observaciones</label>
+                <textarea id="r_obs" placeholder="Estado del vehiculo, condiciones especiales..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button type="submit" class="btn btn-gold">Guardar Reserva</button>
+            <button type="button" class="btn btn-primary" onclick="limpiarForm()">Limpiar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Historial de Reservas</div>
+      <div class="card-body">
+        <div class="filters">
+          <div class="field">
+            <label>Filtrar por Estado</label>
+            <select id="filtroEstado" onchange="loadReservas()">
+              <option value="">Todas</option>
+              <option value="activa">Activas</option>
+              <option value="completada">Completadas</option>
+              <option value="cancelada">Canceladas</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>N° Reserva</th>
+                <th>Cliente</th>
+                <th>Vehiculo</th>
+                <th>Inicio</th>
+                <th>Fin</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyReservas">
+              <tr><td colspan="8" class="loading">Cargando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/admin/js/admin.js"></script>
+  <script>
+    let vehiculos = [];
+    let reservas = [];
+
+    async function init() {
+      const { data, error } = await supabase.from('vehiculos').select('*').eq('activo', true).order('descripcion');
+      if (error) { toast('Error: ' + error.message, 'error'); return; }
+      vehiculos = data;
+      const select = document.getElementById('r_vehiculo');
+      vehiculos.forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v.id;
+        opt.textContent = v.placa + ' — ' + v.descripcion;
+        opt.dataset.precio = v.precio_dia;
+        select.appendChild(opt);
+      });
+      document.getElementById('r_num').value = genReservaNum();
+      loadReservas();
+    }
+
+    function onVehiculoChange() {
+      const select = document.getElementById('r_vehiculo');
+      const opt = select.options[select.selectedIndex];
+      if (opt && opt.dataset.precio) {
+        document.getElementById('r_tarifa').value = opt.dataset.precio;
+        calcTotal();
+      }
+    }
+
+    function calcDias() {
+      const inicio = document.getElementById('r_f_inicio').value;
+      const fin = document.getElementById('r_f_fin').value;
+      if (inicio && fin) {
+        document.getElementById('r_dias').value = daysBetween(inicio, fin);
+        calcTotal();
+      }
+    }
+
+    function calcTotal() {
+      const dias = parseInt(document.getElementById('r_dias').value) || 0;
+      const tarifa = parseFloat(document.getElementById('r_tarifa').value) || 0;
+      const deducible = parseFloat(document.getElementById('r_deducible').value) || 0;
+      const adicional = parseFloat(document.getElementById('r_adicional').value) || 0;
+      const sub = dias * tarifa;
+      const total = sub + deducible + adicional;
+      document.getElementById('r_subtotal').value = '$ ' + fmtMoney(sub);
+      document.getElementById('r_total').value = '$ ' + fmtMoney(total);
+    }
+
+    async function saveReserva(e) {
+      e.preventDefault();
+      const vehiculo_id = parseInt(document.getElementById('r_vehiculo').value);
+      const fecha_inicio = document.getElementById('r_f_inicio').value;
+      const fecha_fin = document.getElementById('r_f_fin').value;
+
+      if (fecha_fin < fecha_inicio) {
+        toast('La fecha de fin no puede ser anterior a la de inicio', 'error');
+        return;
+      }
+
+      // Validar cruce de fechas
+      const { data: conflicts } = await supabase.rpc('check_reserva_overlap', {
+        p_vehiculo_id: vehiculo_id,
+        p_fecha_inicio: fecha_inicio,
+        p_fecha_fin: fecha_fin
+      });
+      if (conflicts && conflicts.length > 0) {
+        toast(`Cruce de fechas con reserva ${conflicts[0].numero_reserva} (${conflicts[0].fecha_inicio} a ${conflicts[0].fecha_fin})`, 'error');
+        return;
+      }
+
+      const totalStr = (document.getElementById('r_total').value || '0').replace(/[^0-9.-]/g, '');
+      const data = {
+        numero_reserva: document.getElementById('r_num').value,
+        vehiculo_id,
+        nombre_cliente: document.getElementById('r_nombre').value,
+        tipo_documento: document.getElementById('r_tipo_doc').value,
+        numero_documento: document.getElementById('r_doc').value || null,
+        residencia: document.getElementById('r_residencia').value || null,
+        telefono_cliente: document.getElementById('r_tel').value || null,
+        email_cliente: document.getElementById('r_email').value || null,
+        licencia_numero: document.getElementById('r_lic').value || null,
+        licencia_vencimiento: document.getElementById('r_lic_vence').value || null,
+        fecha_inicio,
+        hora_inicio: document.getElementById('r_h_inicio').value || null,
+        lugar_inicio: document.getElementById('r_l_inicio').value || null,
+        fecha_fin,
+        hora_fin: document.getElementById('r_h_fin').value || null,
+        lugar_fin: document.getElementById('r_l_fin').value || null,
+        dias: parseInt(document.getElementById('r_dias').value) || 1,
+        tarifa_dia: parseFloat(document.getElementById('r_tarifa').value) || 0,
+        deducible: parseFloat(document.getElementById('r_deducible').value) || 0,
+        servicios_adicionales: parseFloat(document.getElementById('r_adicional').value) || 0,
+        desc_adicionales: document.getElementById('r_desc_ad').value || null,
+        valor_total: parseFloat(totalStr) || 0,
+        metodo_pago: document.getElementById('r_pago').value,
+        estado_pago: document.getElementById('r_estado_pago').value,
+        km_inicial: document.getElementById('r_km').value || null,
+        nivel_combustible: document.getElementById('r_combustible').value,
+        observaciones: document.getElementById('r_obs').value || null,
+        representante: document.getElementById('r_rep').value || null,
+        cargo_representante: document.getElementById('r_cargo').value || null,
+        estado: 'activa'
+      };
+
+      const { error } = await supabase.from('reservas').insert(data);
+      if (error) { toast('Error: ' + error.message, 'error'); return; }
+      toast('Reserva creada exitosamente');
+      limpiarForm();
+      loadReservas();
+    }
+
+    function limpiarForm() {
+      document.getElementById('reservaForm').reset();
+      document.getElementById('r_num').value = genReservaNum();
+      document.getElementById('r_subtotal').value = '';
+      document.getElementById('r_total').value = '';
+      document.getElementById('r_deducible').value = '0';
+      document.getElementById('r_adicional').value = '0';
+    }
+
+    async function loadReservas() {
+      const estado = document.getElementById('filtroEstado').value;
+      let query = supabase.from('reservas').select('*').order('created_at', { ascending: false });
+      if (estado) query = query.eq('estado', estado);
+      const { data, error } = await query;
+      if (error) { toast('Error: ' + error.message, 'error'); return; }
+      reservas = data;
+      renderReservas();
+    }
+
+    function renderReservas() {
+      const tbody = document.getElementById('tbodyReservas');
+      if (reservas.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No hay reservas</td></tr>';
+        return;
+      }
+      const vMap = {};
+      vehiculos.forEach(v => vMap[v.id] = v);
+      const badgeMap = { activa: 'badge-green', completada: 'badge-blue', cancelada: 'badge-red' };
+      tbody.innerHTML = reservas.map(r => {
+        const v = vMap[r.vehiculo_id];
+        return `<tr>
+          <td><strong>${r.numero_reserva}</strong></td>
+          <td>${r.nombre_cliente}<br><small style="color:var(--texto-mid)">${r.telefono_cliente || ''}</small></td>
+          <td>${v ? v.placa : 'N/A'}</td>
+          <td>${fmtDate(r.fecha_inicio)}</td>
+          <td>${fmtDate(r.fecha_fin)}</td>
+          <td style="font-weight:700">$ ${fmtMoney(r.valor_total)}</td>
+          <td><span class="badge ${badgeMap[r.estado] || 'badge-gray'}">${r.estado}</span></td>
+          <td>
+            ${r.estado === 'activa' ? `
+              <button class="btn btn-sm btn-primary" onclick="changeEstado(${r.id},'completada')">Completar</button>
+              <button class="btn btn-sm btn-danger" onclick="changeEstado(${r.id},'cancelada')">Cancelar</button>` : ''}
+            ${r.estado === 'completada' ? `
+              <button class="btn btn-sm btn-danger" onclick="changeEstado(${r.id},'cancelada')">Cancelar</button>` : ''}
+          </td>
+        </tr>`;
+      }).join('');
+    }
+
+    async function changeEstado(id, estado) {
+      const r = reservas.find(x => x.id === id);
+      const label = estado === 'cancelada' ? 'cancelar' : 'completar';
+      if (!confirm(`¿Seguro que desea ${label} la reserva ${r ? r.numero_reserva : ''}?`)) return;
+      const { error } = await supabase.from('reservas').update({ estado }).eq('id', id);
+      if (error) { toast(error.message, 'error'); return; }
+      toast(`Reserva ${estado}`);
+      loadReservas();
+    }
+
+    init();
+  </script>
+</body>
+</html>

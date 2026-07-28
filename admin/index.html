@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Panel Admin — Rentacar del Eje</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <div class="brand">RENTACAR DEL EJE<span>Panel Administrativo</span></div>
+    <nav class="admin-nav">
+      <a href="/admin/">Inicio</a>
+      <a href="/admin/itinerario.html">Itinerario</a>
+      <a href="/admin/reservas.html">Reservas</a>
+      <a href="/admin/vehiculos.html">Vehiculos</a>
+      <a href="/admin/ganancias.html">Ganancias</a>
+    </nav>
+    <button class="btn-logout" onclick="logout()">Salir</button>
+  </header>
+
+  <main class="admin-main">
+    <div class="stats-row" id="stats">
+      <div class="stat-card">
+        <div class="stat-label">Vehiculos Activos</div>
+        <div class="stat-value" id="statVehiculos">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Reservas Activas</div>
+        <div class="stat-value" id="statReservas">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Ingresos del Mes</div>
+        <div class="stat-value" id="statIngresos">—</div>
+        <div class="stat-sub" id="statMes"></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Alertas</div>
+        <div class="stat-value" id="statAlertas">—</div>
+        <div class="stat-sub">Documentos por vencer</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Reservas Activas Actuales</div>
+      <div class="card-body">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>N° Reserva</th>
+                <th>Cliente</th>
+                <th>Vehiculo</th>
+                <th>Inicio</th>
+                <th>Fin</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyReservas">
+              <tr><td colspan="6" class="loading">Cargando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Alertas de Documentos</div>
+      <div class="card-body" id="alertasBody">
+        <div class="loading">Cargando...</div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/admin/js/admin.js"></script>
+  <script>
+    async function loadDashboard() {
+      try {
+        const [vRes, rRes] = await Promise.all([
+          supabase.from('vehiculos').select('*').order('descripcion'),
+          supabase.from('reservas').select('*').order('created_at', { ascending: false })
+        ]);
+        if (vRes.error) throw vRes.error;
+        if (rRes.error) throw rRes.error;
+
+        const vehiculos = vRes.data;
+        const reservas = rRes.data;
+        const activos = vehiculos.filter(v => v.activo);
+        const resActivas = reservas.filter(r => r.estado === 'activa');
+
+        document.getElementById('statVehiculos').textContent = activos.length;
+        document.getElementById('statReservas').textContent = resActivas.length;
+
+        const now = new Date();
+        const mesActual = now.toISOString().slice(0, 7);
+        const ingresosMes = reservas
+          .filter(r => r.estado !== 'cancelada' && r.fecha_inicio && r.fecha_inicio.startsWith(mesActual))
+          .reduce((sum, r) => sum + (Number(r.valor_total) || 0), 0);
+        document.getElementById('statIngresos').textContent = '$ ' + fmtMoney(ingresosMes);
+        document.getElementById('statMes').textContent = now.toLocaleDateString('es-CO', { month: 'long', year: 'numeric' });
+
+        let alertas = 0;
+        let alertasHtml = '';
+        activos.forEach(v => {
+          const poliza = expiryStatus(v.vencimiento_poliza);
+          const soat = expiryStatus(v.vencimiento_soat);
+          if (poliza === 'red') { alertas++; alertasHtml += `<div class="alert alert-danger">${v.placa} — Poliza VENCIDA (${fmtDate(v.vencimiento_poliza)})</div>`; }
+          else if (poliza === 'yellow') { alertas++; alertasHtml += `<div class="alert alert-warning">${v.placa} — Poliza vence pronto (${fmtDate(v.vencimiento_poliza)})</div>`; }
+          if (soat === 'red') { alertas++; alertasHtml += `<div class="alert alert-danger">${v.placa} — SOAT VENCIDO (${fmtDate(v.vencimiento_soat)})</div>`; }
+          else if (soat === 'yellow') { alertas++; alertasHtml += `<div class="alert alert-warning">${v.placa} — SOAT vence pronto (${fmtDate(v.vencimiento_soat)})</div>`; }
+        });
+        document.getElementById('statAlertas').textContent = alertas;
+        document.getElementById('alertasBody').innerHTML = alertasHtml || '<div class="empty-state"><p>Sin alertas</p></div>';
+
+        const tbody = document.getElementById('tbodyReservas');
+        if (resActivas.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No hay reservas activas</td></tr>';
+        } else {
+          const vMap = {};
+          vehiculos.forEach(v => vMap[v.id] = v);
+          tbody.innerHTML = resActivas.map(r => {
+            const v = vMap[r.vehiculo_id];
+            return `<tr>
+              <td><strong>${r.numero_reserva}</strong></td>
+              <td>${r.nombre_cliente}</td>
+              <td>${v ? v.placa + ' — ' + v.descripcion : 'N/A'}</td>
+              <td>${fmtDate(r.fecha_inicio)}</td>
+              <td>${fmtDate(r.fecha_fin)}</td>
+              <td><span class="badge badge-green">Activa</span></td>
+            </tr>`;
+          }).join('');
+        }
+      } catch (e) {
+        console.error(e);
+        toast('Error cargando datos: ' + e.message, 'error');
+      }
+    }
+    loadDashboard();
+  </script>
+</body>
+</html>

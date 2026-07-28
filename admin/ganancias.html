@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Ganancias — Panel Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <div class="brand">RENTACAR DEL EJE<span>Panel Administrativo</span></div>
+    <nav class="admin-nav">
+      <a href="/admin/">Inicio</a>
+      <a href="/admin/itinerario.html">Itinerario</a>
+      <a href="/admin/reservas.html">Reservas</a>
+      <a href="/admin/vehiculos.html">Vehiculos</a>
+      <a href="/admin/ganancias.html">Ganancias</a>
+    </nav>
+    <button class="btn-logout" onclick="logout()">Salir</button>
+  </header>
+
+  <main class="admin-main">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Total Ingresos</div>
+        <div class="stat-value" id="statTotal" style="color:var(--verde)">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Reservas</div>
+        <div class="stat-value" id="statReservas">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Vehiculos Activos</div>
+        <div class="stat-value" id="statVehiculos">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Promedio por Reserva</div>
+        <div class="stat-value" id="statPromedio">—</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Ganancias por Vehiculo</div>
+      <div class="card-body">
+        <div class="filters">
+          <div class="field">
+            <label>Periodo</label>
+            <select id="filtroPeriodo" onchange="onPeriodoChange()">
+              <option value="mes">Mes Actual</option>
+              <option value="mes-pasado">Mes Pasado</option>
+              <option value="anio">Año Actual</option>
+              <option value="todo">Todo el Historial</option>
+              <option value="custom">Personalizado</option>
+            </select>
+          </div>
+          <div class="field" id="fieldDesde" style="display:none">
+            <label>Desde</label>
+            <input type="date" id="filtroDesde">
+          </div>
+          <div class="field" id="fieldHasta" style="display:none">
+            <label>Hasta</label>
+            <input type="date" id="filtroHasta">
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="loadGanancias()" style="align-self:flex-end">Consultar</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Placa</th><th>Descripcion</th><th>Propietario</th><th>Precio/Dia</th><th>Reservas</th><th>Ingresos</th></tr></thead>
+            <tbody id="tbodyGanancias"><tr><td colspan="6" class="loading">Cargando...</td></tr></tbody>
+            <tfoot id="tfootGanancias"></tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/admin/js/admin.js"></script>
+  <script>
+    function getDateRange(p) {
+      const now = new Date(), y = now.getFullYear(), m = now.getMonth();
+      switch(p) {
+        case 'mes': return { desde: new Date(y,m,1).toISOString().slice(0,10), hasta: new Date(y,m+1,0).toISOString().slice(0,10) };
+        case 'mes-pasado': return { desde: new Date(y,m-1,1).toISOString().slice(0,10), hasta: new Date(y,m,0).toISOString().slice(0,10) };
+        case 'anio': return { desde: `${y}-01-01`, hasta: `${y}-12-31` };
+        case 'todo': return {};
+        case 'custom': return { desde: document.getElementById('filtroDesde').value, hasta: document.getElementById('filtroHasta').value };
+      }
+    }
+
+    function onPeriodoChange() {
+      const custom = document.getElementById('filtroPeriodo').value === 'custom';
+      document.getElementById('fieldDesde').style.display = custom ? '' : 'none';
+      document.getElementById('fieldHasta').style.display = custom ? '' : 'none';
+      if (!custom) loadGanancias();
+    }
+
+    async function loadGanancias() {
+      try {
+        const range = getDateRange(document.getElementById('filtroPeriodo').value);
+
+        const [vRes, rRes] = await Promise.all([
+          supabase.from('vehiculos').select('*').eq('activo', true).order('descripcion'),
+          (() => {
+            let q = supabase.from('reservas').select('*').in('estado', ['activa', 'completada']);
+            if (range.desde) q = q.gte('fecha_inicio', range.desde);
+            if (range.hasta) q = q.lte('fecha_inicio', range.hasta);
+            return q;
+          })()
+        ]);
+
+        const vehiculos = vRes.data || [];
+        const reservas = rRes.data || [];
+
+        // Agrupar por vehiculo
+        const stats = vehiculos.map(v => {
+          const vReservas = reservas.filter(r => r.vehiculo_id === v.id);
+          return {
+            ...v,
+            total_reservas: vReservas.length,
+            total_ingresos: vReservas.reduce((sum, r) => sum + (Number(r.valor_total) || 0), 0)
+          };
+        }).sort((a, b) => b.total_ingresos - a.total_ingresos);
+
+        const totalGeneral = stats.reduce((s, v) => s + v.total_ingresos, 0);
+        const totalReservas = stats.reduce((s, v) => s + v.total_reservas, 0);
+
+        document.getElementById('statTotal').textContent = '$ ' + fmtMoney(totalGeneral);
+        document.getElementById('statReservas').textContent = totalReservas;
+        document.getElementById('statVehiculos').textContent = vehiculos.length;
+        document.getElementById('statPromedio').textContent = totalReservas > 0 ? '$ ' + fmtMoney(Math.round(totalGeneral / totalReservas)) : '$ 0';
+
+        const tbody = document.getElementById('tbodyGanancias');
+        if (!stats.length) {
+          tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No hay datos</td></tr>';
+          document.getElementById('tfootGanancias').innerHTML = '';
+          return;
+        }
+
+        tbody.innerHTML = stats.map(v => `<tr>
+          <td><strong style="letter-spacing:1px">${v.placa}</strong></td>
+          <td>${v.descripcion}</td>
+          <td>${v.propietario || '—'}</td>
+          <td>$ ${fmtMoney(v.precio_dia)}</td>
+          <td style="text-align:center">${v.total_reservas}</td>
+          <td style="font-weight:800;color:var(--verde)">$ ${fmtMoney(v.total_ingresos)}</td>
+        </tr>`).join('');
+
+        document.getElementById('tfootGanancias').innerHTML = `
+          <tr style="background:var(--azul)">
+            <td colspan="4" style="color:white;font-weight:800;font-size:14px;letter-spacing:1px;padding:14px 12px">TOTAL GENERAL</td>
+            <td style="color:white;font-weight:800;text-align:center;padding:14px 12px">${totalReservas}</td>
+            <td style="color:var(--oro-claro);font-weight:900;font-size:16px;padding:14px 12px">$ ${fmtMoney(totalGeneral)}</td>
+          </tr>`;
+      } catch (e) {
+        toast('Error: ' + e.message, 'error');
+      }
+    }
+
+    loadGanancias();
+  </script>
+</body>
+</html>

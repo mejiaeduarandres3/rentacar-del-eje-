@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Login — Panel Administrativo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0C2260;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-card {
+      background: white;
+      border-radius: 16px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.4);
+    }
+    .login-logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .login-logo h1 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0C2260;
+      letter-spacing: 2px;
+    }
+    .login-logo p {
+      font-size: 12px;
+      color: #888;
+      margin-top: 4px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .gold-bar {
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, #C89B20, #F0C840);
+      border-radius: 2px;
+      margin: 12px auto 0;
+    }
+    .field {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: #0C2260;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      margin-bottom: 6px;
+    }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      transition: border-color .2s;
+    }
+    input:focus {
+      outline: none;
+      border-color: #2A5AC8;
+      box-shadow: 0 0 0 3px rgba(42,90,200,.12);
+    }
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #0C2260, #173A9A);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s;
+      font-family: 'Inter', sans-serif;
+    }
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(12,34,96,.4);
+    }
+    .btn-login:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .error-msg {
+      background: #fee;
+      color: #c0392b;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 16px;
+      display: none;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <div class="login-logo">
+      <h1>RENTACAR DEL EJE</h1>
+      <p>Panel Administrativo</p>
+      <div class="gold-bar"></div>
+    </div>
+    <div class="error-msg" id="errorMsg"></div>
+    <form id="loginForm">
+      <div class="field">
+        <label>Correo Electronico</label>
+        <input type="email" id="email" autocomplete="email" required placeholder="admin@rentacardeleje.com">
+      </div>
+      <div class="field">
+        <label>Contraseña</label>
+        <input type="password" id="password" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn-login" id="btnLogin">Ingresar</button>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/admin/js/admin.js"></script>
+  <script>
+    // Si ya tiene sesion, redirigir al panel
+    (async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) window.location.href = '/admin/';
+    })();
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btnLogin');
+      const err = document.getElementById('errorMsg');
+      btn.disabled = true;
+      btn.textContent = 'Ingresando...';
+      err.style.display = 'none';
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value
+      });
+
+      if (error) {
+        err.textContent = error.message === 'Invalid login credentials'
+          ? 'Correo o contraseña incorrectos'
+          : error.message;
+        err.style.display = 'block';
+      } else {
+        window.location.href = '/admin/';
+      }
+      btn.disabled = false;
+      btn.textContent = 'Ingresar';
+    });
+  </script>
+</body>
+</html>
