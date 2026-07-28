@@ -34,7 +34,14 @@
             <h4 style="font-size:11px;font-weight:800;color:var(--azul);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid var(--oro)">Datos del Documento</h4>
             <div class="form-grid">
               <div class="field">
-                <label>N° de Reserva</label>
+                <label>Tipo de Documento</label>
+                <select id="r_tipo_gen" onchange="onTipoGenChange()" style="font-weight:700">
+                  <option value="reserva">Reserva</option>
+                  <option value="cotizacion">Cotizacion</option>
+                </select>
+              </div>
+              <div class="field">
+                <label id="lbl_num">N° de Reserva</label>
                 <input type="text" id="r_num" readonly style="font-weight:800;color:var(--azul)">
               </div>
               <div class="field">
@@ -274,6 +281,18 @@
       loadReservas();
     }
 
+    function onTipoGenChange() {
+      const tipo = document.getElementById('r_tipo_gen').value;
+      const editId = document.getElementById('r_edit_id').value;
+      document.getElementById('lbl_num').textContent = tipo === 'cotizacion' ? 'N° de Cotizacion' : 'N° de Reserva';
+      if (!editId) {
+        const y = new Date().getFullYear();
+        const seq = String(Math.floor(Math.random() * 9999) + 1).padStart(4, '0');
+        const prefix = tipo === 'cotizacion' ? 'COT' : 'RCE';
+        document.getElementById('r_num').value = prefix + '-' + y + '-' + seq;
+      }
+    }
+
     function onVehiculoChange() {
       const select = document.getElementById('r_vehiculo');
       const opt = select.options[select.selectedIndex];
@@ -333,6 +352,7 @@
       const valor_total = (dias * tarifa_dia) + deducible + servicios_adicionales;
       const data = {
         numero_reserva: document.getElementById('r_num').value,
+        tipo_doc: document.getElementById('r_tipo_gen').value,
         vehiculo_id,
         nombre_cliente: document.getElementById('r_nombre').value,
         tipo_documento: document.getElementById('r_tipo_doc').value,
@@ -385,7 +405,9 @@
       const r = reservas.find(x => x.id === id);
       if (!r) return;
       document.getElementById('r_edit_id').value = r.id;
+      document.getElementById('r_tipo_gen').value = r.tipo_doc || 'reserva';
       document.getElementById('r_num').value = r.numero_reserva;
+      document.getElementById('lbl_num').textContent = r.tipo_doc === 'cotizacion' ? 'N° de Cotizacion' : 'N° de Reserva';
       document.getElementById('r_vehiculo').value = r.vehiculo_id;
       document.getElementById('r_nombre').value = r.nombre_cliente || '';
       document.getElementById('r_tipo_doc').value = r.tipo_documento || 'Cedula de Ciudadania';
@@ -427,6 +449,8 @@
     function limpiarForm() {
       document.getElementById('reservaForm').reset();
       document.getElementById('r_edit_id').value = '';
+      document.getElementById('r_tipo_gen').value = 'reserva';
+      document.getElementById('lbl_num').textContent = 'N° de Reserva';
       document.getElementById('r_num').value = genReservaNum();
       document.getElementById('r_subtotal').value = '';
       document.getElementById('r_total').value = '';
@@ -459,7 +483,7 @@
       tbody.innerHTML = reservas.map(r => {
         const v = vMap[r.vehiculo_id];
         return `<tr>
-          <td><strong>${r.numero_reserva}</strong></td>
+          <td><strong>${r.numero_reserva}</strong>${r.tipo_doc === 'cotizacion' ? '<br><span class="badge badge-yellow" style="font-size:9px">Cotizacion</span>' : ''}</td>
           <td>${r.nombre_cliente}<br><small style="color:var(--texto-mid)">${r.telefono_cliente || ''}</small></td>
           <td>${v ? v.placa : 'N/A'}</td>
           <td>${fmtDate(r.fecha_inicio)}</td>
@@ -519,9 +543,11 @@
       const subtotal = (r.dias || 0) * (Number(r.tarifa_dia) || 0);
       const hoy = new Date();
       const fechaEmision = hoy.getDate() + ' de ' + ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'][hoy.getMonth()] + ', ' + hoy.getFullYear();
+      const esCotizacion = r.tipo_doc === 'cotizacion';
+      const tipoLabel = esCotizacion ? 'Cotizacion' : 'Reserva';
       const w = window.open('', '_blank');
       w.document.write(`<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
-<title>Reserva ${r.numero_reserva}</title>
+<title>${tipoLabel} ${r.numero_reserva}</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
@@ -635,7 +661,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;color:#1a1a2e;max-wi
 
 <hr class="gold-line">
 <div class="doc-title-bar">
-  <h1>Comprobante de Reserva de Vehiculo</h1>
+  <h1>Comprobante de ${tipoLabel} de Vehiculo</h1>
 </div>
 
 <div class="section">
