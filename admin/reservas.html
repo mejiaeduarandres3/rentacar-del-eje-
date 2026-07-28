@@ -255,7 +255,7 @@
     let reservas = [];
 
     async function init() {
-      const { data, error } = await supabase.from('vehiculos').select('*').eq('activo', true).order('descripcion');
+      const { data, error } = await sb.from('vehiculos').select('*').eq('activo', true).order('descripcion');
       if (error) { toast('Error: ' + error.message, 'error'); return; }
       vehiculos = data;
       const select = document.getElementById('r_vehiculo');
@@ -311,7 +311,7 @@
       }
 
       // Validar cruce de fechas
-      const { data: conflicts } = await supabase.rpc('check_reserva_overlap', {
+      const { data: conflicts } = await sb.rpc('check_reserva_overlap', {
         p_vehiculo_id: vehiculo_id,
         p_fecha_inicio: fecha_inicio,
         p_fecha_fin: fecha_fin
@@ -355,7 +355,7 @@
         estado: 'activa'
       };
 
-      const { error } = await supabase.from('reservas').insert(data);
+      const { error } = await sb.from('reservas').insert(data);
       if (error) { toast('Error: ' + error.message, 'error'); return; }
       toast('Reserva creada exitosamente');
       limpiarForm();
@@ -373,7 +373,7 @@
 
     async function loadReservas() {
       const estado = document.getElementById('filtroEstado').value;
-      let query = supabase.from('reservas').select('*').order('created_at', { ascending: false });
+      let query = sb.from('reservas').select('*').order('created_at', { ascending: false });
       if (estado) query = query.eq('estado', estado);
       const { data, error } = await query;
       if (error) { toast('Error: ' + error.message, 'error'); return; }
@@ -415,7 +415,7 @@
       const r = reservas.find(x => x.id === id);
       const label = estado === 'cancelada' ? 'cancelar' : 'completar';
       if (!confirm(`¿Seguro que desea ${label} la reserva ${r ? r.numero_reserva : ''}?`)) return;
-      const { error } = await supabase.from('reservas').update({ estado }).eq('id', id);
+      const { error } = await sb.from('reservas').update({ estado }).eq('id', id);
       if (error) { toast(error.message, 'error'); return; }
       toast(`Reserva ${estado}`);
       loadReservas();

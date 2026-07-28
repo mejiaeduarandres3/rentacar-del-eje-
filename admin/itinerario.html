@@ -96,8 +96,8 @@
       currentYear = now.getFullYear();
       currentMonth = now.getMonth();
       const [vRes, rRes] = await Promise.all([
-        supabase.from('vehiculos').select('*').eq('activo', true).order('descripcion'),
-        supabase.from('reservas').select('*').in('estado', ['activa', 'completada'])
+        sb.from('vehiculos').select('*').eq('activo', true).order('descripcion'),
+        sb.from('reservas').select('*').in('estado', ['activa', 'completada'])
       ]);
       vehiculos = vRes.data || [];
       reservas = rRes.data || [];

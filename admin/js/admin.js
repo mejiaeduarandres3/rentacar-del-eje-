@@ -4,13 +4,13 @@
 const SUPABASE_URL = 'https://zzufpmagbfvlqexivzdx.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp6dWZwbWFnYmZ2bHFleGl2emR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyNjQwNDIsImV4cCI6MjEwMDg0MDA0Mn0.h2KzwmRC4kXuoi_0J0mx3BGarDR1xPRgcs8_I8MSqI4';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // =============================================
 // AUTH
 // =============================================
 async function checkAuth() {
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { session } } = await sb.auth.getSession();
   if (!session && !window.location.pathname.includes('login')) {
     window.location.href = '/admin/login.html';
     return null;
@@ -19,7 +19,7 @@ async function checkAuth() {
 }
 
 async function logout() {
-  await supabase.auth.signOut();
+  await sb.auth.signOut();
   window.location.href = '/admin/login.html';
 }
 

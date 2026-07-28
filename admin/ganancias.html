@@ -104,9 +104,9 @@
         const range = getDateRange(document.getElementById('filtroPeriodo').value);
 
         const [vRes, rRes] = await Promise.all([
-          supabase.from('vehiculos').select('*').eq('activo', true).order('descripcion'),
+          sb.from('vehiculos').select('*').eq('activo', true).order('descripcion'),
           (() => {
-            let q = supabase.from('reservas').select('*').in('estado', ['activa', 'completada']);
+            let q = sb.from('reservas').select('*').in('estado', ['activa', 'completada']);
             if (range.desde) q = q.gte('fecha_inicio', range.desde);
             if (range.hasta) q = q.lte('fecha_inicio', range.hasta);
             return q;

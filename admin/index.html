@@ -82,8 +82,8 @@
     async function loadDashboard() {
       try {
         const [vRes, rRes] = await Promise.all([
-          supabase.from('vehiculos').select('*').order('descripcion'),
-          supabase.from('reservas').select('*').order('created_at', { ascending: false })
+          sb.from('vehiculos').select('*').order('descripcion'),
+          sb.from('reservas').select('*').order('created_at', { ascending: false })
         ]);
         if (vRes.error) throw vRes.error;
         if (rRes.error) throw rRes.error;

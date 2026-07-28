@@ -120,7 +120,7 @@
     let vehiculos = [];
 
     async function loadVehiculos() {
-      const { data, error } = await supabase.from('vehiculos').select('*').order('activo', { ascending: false }).order('descripcion');
+      const { data, error } = await sb.from('vehiculos').select('*').order('activo', { ascending: false }).order('descripcion');
       if (error) { toast('Error: ' + error.message, 'error'); return; }
       vehiculos = data;
       renderTable();
@@ -173,11 +173,11 @@
       };
       try {
         if (id) {
-          const { error } = await supabase.from('vehiculos').update(data).eq('id', parseInt(id));
+          const { error } = await sb.from('vehiculos').update(data).eq('id', parseInt(id));
           if (error) throw error;
           toast('Vehiculo actualizado');
         } else {
-          const { error } = await supabase.from('vehiculos').insert(data);
+          const { error } = await sb.from('vehiculos').insert(data);
           if (error) throw error;
           toast('Vehiculo registrado');
         }
@@ -220,7 +220,7 @@
       const v = vehiculos.find(x => x.id === id);
       if (!v) return;
       if (!confirm(`¿Seguro que desea ${activo ? 'activar' : 'desactivar'} el vehiculo ${v.placa}?`)) return;
-      const { error } = await supabase.from('vehiculos').update({ activo }).eq('id', id);
+      const { error } = await sb.from('vehiculos').update({ activo }).eq('id', id);
       if (error) { toast(error.message, 'error'); return; }
       toast(`Vehiculo ${activo ? 'activado' : 'desactivado'}`);
       loadVehiculos();
