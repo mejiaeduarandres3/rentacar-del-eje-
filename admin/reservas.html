@@ -474,6 +474,7 @@
               <button class="btn btn-sm btn-danger" onclick="changeEstado(${r.id},'cancelada')">Cancelar</button>` : ''}
             ${r.estado === 'completada' ? `
               <button class="btn btn-sm btn-danger" onclick="changeEstado(${r.id},'cancelada')">Cancelar</button>` : ''}
+            <button class="btn btn-sm" style="background:#dc3545;color:white;font-weight:700" onclick="eliminarReserva(${r.id})">Eliminar</button>
           </td>
         </tr>`;
       }).join('');
@@ -486,6 +487,15 @@
       const { error } = await sb.from('reservas').update({ estado }).eq('id', id);
       if (error) { toast(error.message, 'error'); return; }
       toast(`Reserva ${estado}`);
+      loadReservas();
+    }
+
+    async function eliminarReserva(id) {
+      const r = reservas.find(x => x.id === id);
+      if (!confirm(`¿Seguro que desea ELIMINAR permanentemente la reserva ${r ? r.numero_reserva : ''}? Esta accion no se puede deshacer.`)) return;
+      const { error } = await sb.from('reservas').delete().eq('id', id);
+      if (error) { toast(error.message, 'error'); return; }
+      toast('Reserva eliminada');
       loadReservas();
     }
 
