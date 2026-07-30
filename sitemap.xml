@@ -800,4 +800,76 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/los-nevados-national-park"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/parque-nacional-los-nevados"/>
   </url>
+  <url>
+    <loc>https://rentacardeleje.com/termales-santa-rosa-de-cabal</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/termales-santa-rosa-de-cabal"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/santa-rosa-hot-springs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/termales-santa-rosa-de-cabal"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/santa-rosa-hot-springs</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/termales-santa-rosa-de-cabal"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/santa-rosa-hot-springs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/termales-santa-rosa-de-cabal"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/termales-manizales</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/termales-manizales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/manizales-hot-springs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/termales-manizales"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/manizales-hot-springs</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/termales-manizales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/manizales-hot-springs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/termales-manizales"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/fincas-cafeteras-quindio</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/fincas-cafeteras-quindio"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/coffee-farms-quindio"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/fincas-cafeteras-quindio"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/coffee-farms-quindio</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/fincas-cafeteras-quindio"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/coffee-farms-quindio"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/fincas-cafeteras-quindio"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/circasia-guia-turistica</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/circasia-guia-turistica"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/circasia-guide"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/circasia-guia-turistica"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/circasia-guide</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/circasia-guia-turistica"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/circasia-guide"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/circasia-guia-turistica"/>
+  </url>
 </urlset>
