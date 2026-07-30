@@ -728,4 +728,76 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/car-rental-la-nubia-airport"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/alquiler-carros-aeropuerto-la-nubia"/>
   </url>
+  <url>
+    <loc>https://rentacardeleje.com/parque-del-cafe</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/parque-del-cafe"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/coffee-park"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/parque-del-cafe"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/coffee-park</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/parque-del-cafe"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/coffee-park"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/parque-del-cafe"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/panaca-quimbaya</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/panaca-quimbaya"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/panaca-quimbaya"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/panaca-quimbaya"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/panaca-quimbaya</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/panaca-quimbaya"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/panaca-quimbaya"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/panaca-quimbaya"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/que-ver-en-manizales</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/que-ver-en-manizales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/things-to-do-manizales"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/que-ver-en-manizales"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/things-to-do-manizales</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/que-ver-en-manizales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/things-to-do-manizales"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/que-ver-en-manizales"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/parque-nacional-los-nevados</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/parque-nacional-los-nevados"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/los-nevados-national-park"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/parque-nacional-los-nevados"/>
+  </url>
+  <url>
+    <loc>https://rentacardeleje.com/en/los-nevados-national-park</loc>
+    <lastmod>2026-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://rentacardeleje.com/parque-nacional-los-nevados"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://rentacardeleje.com/en/los-nevados-national-park"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://rentacardeleje.com/parque-nacional-los-nevados"/>
+  </url>
 </urlset>
